@@ -1,0 +1,227 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Histogram
+{% endblock %}
+
+{% block content %}
+
+    <p id="return" style="text-align: center" class="btn-light"> .  </p>
+
+    <div id="container" style="height: 400px"></div>
+
+    <div style="margin-left: 45%; margin-right:45%; text-align: center; padding-top: 5pt">
+        <div id="start" class="btn btn-primary">Start</div>
+    </div>
+
+    <br><br>
+    <div id="input" style="visibility: hidden">
+        <div class="card">
+            <div class="card-header">
+                Please enter your decision.
+            </div>
+            <div class="card-body">
+                What percentage do you want to invest in the asset?
+                <div class="input-group">
+                    <input class="form-control" name="investment" type="number" min="0" max="200" required>
+                    <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <br><br>
+
+    {% next_button %}
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    {# <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> #}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <script>
+
+        var data1 = {{ returns|json }};
+        var page = {{ page|json }}-1;
+
+        if (page == 0) {
+            var count0 = 0;
+            var count1 = 0;
+            var count2 = 0;
+            var count3 = 0;
+            var count4 = 0;
+            var count5 = 0;
+            var count6 = 0;
+            var count7 = 0;
+            var count8 = 0;
+            var count9 = 0;
+        }
+        else {
+            var count0 = {{ count0|json }};
+            var count1 = {{ count1|json }};
+            var count2 = {{ count2|json }};
+            var count3 = {{ count3|json }};
+            var count4 = {{ count4|json }};
+            var count5 = {{ count5|json }};
+            var count6 = {{ count6|json }};
+            var count7 = {{ count7|json }};
+            var count8 = {{ count8|json }};
+            var count9 = {{ count9|json }};
+        }
+
+        var data2 = [count0,
+                     count1,
+                     count2,
+                     count3,
+                     count4,
+                     count5,
+                     count6,
+                     count7,
+                     count8,
+                     count9];
+
+        var chart = Highcharts.chart('container', {
+
+            credits: {enabled: false},
+            legend: {enabled: false},
+            title: {text: ''},
+            tooltip: {enabled: false},
+
+            xAxis: {
+//                opposite: true,
+                categories: ['-4% or less',
+                             '-4% to -3%',
+                             '-3% to -2%',
+                             '-2% to -1%',
+                             '-1% to 0%',
+                             '0% to +1%',
+                             '+1% to +2%',
+                             '+2% to +3%',
+                             '+3% to +4%',
+                             '+4% or more']
+            },
+            yAxis: {
+                min: 0,
+                max: 50,
+                title: {
+                    text: 'Frequency'
+                }
+            },
+
+            series: [{
+                type: 'bar',
+                data: data2
+            }]
+        });
+
+
+        var k = 0;
+
+        var time_per_return = 700;
+        var number_of_returns = 30;
+
+        var return1 = 0;
+
+        function UpdateReturns(){
+
+            document.getElementById("return").innerHTML = return1;
+            if (return1 < 0) {
+                document.getElementById("return").style.background = "red";
+                setTimeout(function(){
+                    document.getElementById("return").style.background = "#f8f9fa";
+                }, 100)
+            }
+            if (return1 > 0) {
+                document.getElementById("return").style.background = "#33ff00";
+                setTimeout(function(){
+                    document.getElementById("return").style.background = "#f8f9fa";
+                }, 100)
+            }
+            if (return1 = 0) {
+                document.getElementById("return").style.background = "#f8f9fa";
+            }
+        }
+
+        $('#start').click(function () {
+
+            document.getElementById("start").style.visibility = "hidden";
+
+            var interval = setInterval(function () {
+
+                return1 = Math.round(data1.slice(number_of_returns*page, number_of_returns*(page+1))[k]*100)/100;
+
+                if (return1 <= -4.0){
+                    count0 = count0+1;
+                }
+                chart.series[0].data[0].update(count0);
+
+                    if (return1 > -4.0 & return1 <= -3.0){
+                    count1 = count1+1;
+                }
+                chart.series[0].data[1].update(count1);
+
+                    if (return1 > -3.0 & return1 <= -2.0){
+                    count2 = count2+1;
+                }
+                chart.series[0].data[2].update(count2);
+
+                    if (return1 > -2.0 & return1 <= -1.0){
+                    count3 = count3+1;
+                }
+                chart.series[0].data[3].update(count3);
+
+                    if (return1 > -1.0 & return1 <= 0.0){
+                    count4 = count4+1;
+                }
+                chart.series[0].data[4].update(count4);
+
+                    if (return1 > 0.0 & return1 <= 1.0){
+                    count5 = count5+1;
+                }
+                chart.series[0].data[5].update(count5);
+
+                    if (return1 > 1.0 & return1 <= 2.0){
+                    count6 = count6+1;
+                }
+                chart.series[0].data[6].update(count6);
+
+                    if (return1 > 2.0 & return1 <= 3.0){
+                    count7 = count7+1;
+                }
+                chart.series[0].data[7].update(count7);
+
+                    if (return1 > 3.0 & return1 <= 4.0){
+                    count8 = count8+1;
+                }
+                chart.series[0].data[8].update(count8);
+
+                    if (return1 > 4.0){
+                    count9 = count9+1;
+                }
+                chart.series[0].data[9].update(count9);
+
+                UpdateReturns();
+
+                k += 1;
+
+            }, time_per_return);
+
+            setTimeout(function() { clearInterval(interval); }, time_per_return*number_of_returns);
+
+            setTimeout(function(){
+                document.getElementById("input").style.visibility = "visible";
+            }, time_per_return*number_of_returns+500);
+
+        });
+
+
+    </script>
+
+{% endblock %}

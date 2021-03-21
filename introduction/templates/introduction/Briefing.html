@@ -1,0 +1,39 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block styles %}
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+    Einführung
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+    <div class="card">
+        <div class="card-header">
+            <p>Das folgende Experiment besteht aus drei Teilen.</p>
+            <p>Im ersten Teil des Experiments werden Sie mit einem hypothetischen Auswahlszenario konfrontiert,
+                woraufhin Sie eine <strong>Verteilung</strong>  gemäß Ihren eigenen Vorlieben und Präferenzen zu treffen haben.
+                Bitte lesen Sie die entsprechenden Angaben aufmerksam durch und nehmen Sie sich ausreichend Zeit für Ihre Entscheidung.</p>
+            <p>Der zweite Teil des Experiments sind Fragen zu Ihrem Finanziellen und Nummerischen Kenntnissen.</p>
+            <p>Im dritten Teil werden Ihre Sozidemographischen erhoben und anschließend ihre persönlichen Daten
+                die Notwendig sind für Ihre Kompensation.</p>
+            <p>Bitte klicken Sie auf ‚Weiter‘, um mit dem ersten Teil zu beginnen.</p>
+        </div>
+    </div>
+</div>
+
+
+    <!--- Next Button -->
+<div style="text-align:center; margin:20px">
+  <button class="otree-btn-next btn btn-primary">Weiter</button>
+</div>
+
+<div>
+    <img src="{% static 'uibk_logo.png' %}" alt="UBIK" style="width:20%;margin:auto;display:block">
+</div>
+
+{% endblock %}

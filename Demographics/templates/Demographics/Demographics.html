@@ -1,0 +1,300 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load staticfiles otree %}
+{% load i18n %}
+{% load humanize %}
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'global/css/all.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet"/>
+    <link href="{% static 'Demographics/css/custom.css' %}" rel="stylesheet">
+{% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+
+{% block title %}
+    {% trans "Soziodemographische Daten" %}
+{% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+
+{% block content %}
+
+    <!--- Image Logo of ECON LAB --------------------------------------------------------------------------------- --->
+    <img src="{% static 'econlab.png' %}" alt="Innsbruck EconLab" style=" width: 100px; margin-right:5pt; float:right "/>
+     <!-- --------------------------------------------------------------------------------------------------------- --->
+
+    <div class="wrapper">
+
+       <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Block {{ section }} von {{ section_total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ section_progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Aufgabe {{ page }} von {{ total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+        <div class="progress-vspace"></div>
+    </div>
+
+
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Page - Demographics   -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <div class="card">
+{#                {% blocktrans trimmed %}#}
+{#                    Bitte beantworten sie die folgende Fragen#}
+{#                {%  endblocktrans %}#}
+        {#       Gender Frage 1#}
+            <div class="card-header">
+                <div class="container">
+                    <table class="row">
+                        <tr>
+                            <td>
+                                <b> Was ist ihr Geschlecht?
+                                </b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card-body">
+                <table>
+                        <table class="row" style="margin-left: auto;margin-right: auto;">
+                            <tr>
+                                <td style="padding-left: 30px">
+                                    <p> <input type="radio" name="gender" id="gender_m" value="m" required>
+                                        <label class="btn btn-light" for="gender_m"> männlich</label> </p>
+                                    <p> <input type="radio" name="gender" id="gender_f" value="f" required>
+                                        <label class="btn btn-light" for="gender_f"> weiblich</label> </p>
+                                    <p> <input type="radio" name="gender" id="gender_other" value="other" required>
+                                        <label class="btn btn-light" for="gender_other"> divers</label>  </p>
+                                    <p> <input type="radio" name="gender" id="gender_noreply" value= "nothing">
+                                        <label class="btn btn-light" for="gender_noreply"> möchte Ich nicht beantwortet</label>  </p>
+                                </td>
+                            </tr>
+                        </table>
+                </table>
+            </div>
+        </div>
+
+
+
+     {#       Age Frage 2#}
+        <div class="card">
+            <div class="card-header">
+                <table class="row">
+                    <tr>
+                        <td>
+                            <b> Wie alt sind Sie? </b>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-body">
+                <table>
+                    <table class="row">
+                        <tr>
+                            <td style="padding-left: 30px">
+                                <input type="number" name="age" min="18" max="99" steps="1" value="age" id="age "required>
+                                <label class="btn btn-light" for="age"> Jahre</label>
+                            </td>
+
+                            </td>
+                        </tr>
+                    </table>
+                </table>
+            </div>
+        </div>
+
+
+
+    {#       Aktienbesitz Frage 3#}
+    <div class="card">
+        <div class="card-header">
+            <table class="row">
+                <tr>
+                    <td>
+                        <b> Besitzen Sie Aktien oder einen Aktienfonds? </b>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-body" style="display: flex">
+            <table class="row">
+                <tr>
+                    <td style="padding-left: 30px">
+                        <input type="radio" id="stock_yes" name="stock_ownership"  value=True required>
+                        <label class="btn btn-light" for="stock_yes"> Ja </label></td>
+                    <td style="padding-left: 30px">
+                        <input type="radio" id="stock_no" name="stock_ownership"  value=False required>
+                        <label class="btn btn-light" for="stock_no"> Nein </label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+
+     {#       Statistik Frage 5#}
+    <div class="card">
+        <div class="card-header">
+            <table class="row">
+                <tr>
+                    <td>
+                        <b> Wie würden Sie Ihr Wissen über Statistik beschreiben</b>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-body">
+            <table>
+                <table class="row">
+                    <div class="demo-container">
+                        <div class="flex-item-left">
+                            <input type="radio" id="stats_knowledge1" name="stats_knowledge" value="1" required>
+                            <label class="btn btn-light" for="stats_knowledge1"> keine Kenntnisse</label>
+                        </div>
+                        <div class="flex-item-middle">
+                            <input type="radio" id="stats_knowledge2" name="stats_knowledge" value="2" required>
+                            <label class="btn btn-light" for="stats_knowledge2"> Grundkenntnisse</label>
+                        </div>
+                        <div class="flex-item-middle1">
+                            <input type="radio" id="stats_knowledge3" name="stats_knowledge" value="3" required>
+                            <label class="btn btn-light" for="stats_knowledge3"> Fortgeschrittene</label>
+                        </div>
+                        <div class="flex-item-right">
+                            <input type="radio" id="stats_knowledge4" name="stats_knowledge" value="4" required>
+                            <label class="btn btn-light" for="stats_knowledge4"> Experte</label>
+                        </div>
+                    </div>
+                </table>
+            </table>
+        </div>
+    </div>
+
+    {#       Risiko Frage 4#}
+    <div class="card">
+        <div class="card-header">
+            <table class="row">
+                <tr>
+                    <td>
+                        <b> Wie schätzen Sie sich persönlich ein: Sind Sie im Allgemeinen ein risikobereiter Mensch oder
+                        versuchen Sie, Risiken zu vermeiden?
+                        </b>
+                        <em>
+                            ☞ Bitte kreuzen Sie ein Kästchen auf der Skala an, wobei der Wert 0 bedeutet:
+                            "gar nicht risikobereit" und der Wert 10: "sehr risikobereit". Mit den Werten dazwischen können
+                            Sie Ihre Einschätzung abstufen
+                        </em>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card-body">
+            <table class="row" style="margin-left: auto; margin-right: auto">
+                <div class="demo-container">
+{#                    <tr>#}
+                        <div class="flex-item-risk small" style="font-size: 40%">
+                            <br>
+                            {% trans "gar nicht risikobereit" %}
+                        </div>
+                        <div class="flex-item-risk" style="padding-left: 20px">
+                            <input type="radio" name="risk_attitude" value="1" id="risk_aversion_1" required>
+                            <br>
+                            <label class="btn btn-light" for="risk_aversion_1">1 </label>
+                        </div>
+                        <div class="flex-item-risk" style="padding-left: 20px">
+                            <input type="radio" name="risk_attitude" value="2" id="risk_aversion_2" required>
+                            <br>
+                            <label class="btn btn-light" for="risk_aversion_2">2 </label>
+                        </div>
+                        <div class="flex-item-risk" style="padding-left: 20px">
+                            <input type="radio" name="risk_attitude" value="3" id="risk_aversion_3" required>
+                            <br>
+                            <label class="btn btn-light" for="risk_aversion_3">3 </label>
+                        </div>
+                        <div class="flex-item-risk" style="padding-left: 20px">
+                            <input type="radio" name="risk_attitude" value="4" id="risk_aversion_4" required>
+                            <br>
+                            <label class="btn btn-light" for="risk_aversion_4">4 </label>
+                        </div>
+                        <div class="flex-item-risk" style="padding-left: 20px">
+                            <input type="radio" name="risk_attitude" value="5" id="risk_aversion_5" required>
+                            <br>
+                            <label class="btn btn-light" for="risk_aversion_5">5 </label>
+                        </div>
+                        <div class="flex-item-risk" style="padding-left: 20px">
+                            <input type="radio" name="risk_attitude" value="6" id="risk_aversion_6" required>
+                            <br>
+                            <label class="btn btn-light" for="risk_aversion_6">6 </label>
+                        </div>
+                        <div class="flex-item-risk" style="padding-left: 20px">
+                            <input type="radio" name="risk_attitude" value="7" id="risk_aversion_7" required>
+                            <br>
+                            <label class="btn btn-light" for="risk_aversion_7">7 </label>
+                        </div>
+                        <div class="flex-item-risk" style="padding-left: 20px">
+                            <input type="radio" name="risk_attitude" value="8" id="risk_aversion_8" required>
+                            <br>
+                            <label class="btn btn-light" for="risk_aversion_8">8 </label>
+                        </div>
+                        <div class="flex-item-risk" style="padding-left: 20px">
+                            <input type="radio" name="risk_attitude" value="9" id="risk_aversion_9" required>
+                            <br>
+                            <label class="btn btn-light" for="risk_aversion_9">9 </label>
+                        </div>
+                        <div class="flex-item-risk" style="padding-left: 20px">
+                            <input type="radio" name="risk_attitude" value="10" id="risk_aversion_10" required>
+                            <br>
+                            <label class="btn btn-light" for="risk_aversion_10">10 </label>
+                        </div>
+                        <div class="flex-item-risk small" style="font-size: 40%">
+                            <br>
+                            {% trans "sehr risikobereit" %}
+                        </div>
+{#                    </tr>#}
+                </div>
+            </table>
+        </div>
+    </div>
+
+    {{ form.errors }}
+
+
+
+<!--- Next Button -->
+<div style="text-align:center; margin:20px">
+        <button class="otree-btn-next btn btn-primary">Weiter</button>
+    </div>
+    <div>
+    <img src="{% static 'uibk_logo.png' %}" alt="UBIK" style="width:20%;margin:auto;display:block">
+    </div>
+
+{% endblock %}

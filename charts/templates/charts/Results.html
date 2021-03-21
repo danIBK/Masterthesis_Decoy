@@ -1,0 +1,77 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{#--- STYLES ---------------------------------------------------------------------------------------------------------#}
+{% block styles %}
+    <link href="{% static 'global/css/all.css' %}" rel="stylesheet"/>
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet"/>
+    <link href="{% static 'charts/css/custom.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block title %}
+    Ihre Ergebnisse
+{% endblock %}
+
+{% block content %}
+    <!--- Image Logo of ECON LAB --------------------------------------------------------------------------------- --->
+    <img src="{% static 'econlab.png' %}" alt="Innsbruck EconLab" style=" width: 100px; margin-right:5pt; float:right "/>
+    <!-- --------------------------------------------------------------------------------------------------------- --->
+    <!--- Progress Wrapper --------------------------------------------------------------------------------- --->
+    <div class="wrapper">
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar Block -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Block {{ section }} von {{ section_total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ section_progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar Aufgabe-->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Aufgabe {{ page }} von {{ total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+        <div class="progress-vspace"></div>
+    </div>
+
+    <div class="wrapper">
+        <div class="card">
+            <div class="card-header">
+                Ihre erzielte Rendite aus der zufällig ausgewählten Investment Entscheidung
+                {% if base_or_treatment < 1%} 1
+                {% elif base_or_treatment == 1 %}2{% endif %} hat sich wie folgt entwickelt.
+
+            </div>
+            <div class="card-body">
+                <div class="card-header center" style="background-color: whitesmoke; color: #003362">
+                    Ihre 10000€ haben eine Rendite von <strong> {{ player.payoff }} </strong> erzielt.
+                </div>
+            </div>
+        {% if player.payoff < 0 %}
+            <div class="btn btn-warning">
+            Hinweise: Sie können nicht unter einen Auszahlungsbetrag von 5 Euro fallen.
+            </div>
+        {% endif %}
+        </div>
+    </div>
+
+<!--- Next Button -->
+    <div style="text-align:center; margin:20px">
+        <button class="otree-btn-next btn btn-primary" >Weiter</button>
+    </div>
+    <div>
+    <img src="{% static 'uibk_logo.png' %}" alt="UBIK" style="width:20%;margin:auto;display:block">
+    </div>
+
+{% endblock %}
+
+

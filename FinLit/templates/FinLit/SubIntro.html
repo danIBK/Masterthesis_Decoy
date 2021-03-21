@@ -1,0 +1,39 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+
+    <div class="wrapper">
+        <div class="instructions">
+            Der folgende Block besteht aus 5 allgemeinen Fragen zum Thema Finanzen.
+            </div>
+        </div>
+
+    <div style="text-align: center">
+        <button style="display: none" class="otree-btn-next btn btn-primary" onload="showStuff()" id="button">Weiter</button>
+    </div>
+
+<script>
+
+        function showStuff() {
+            my_button = document.getElementById("button")
+            my_button.style.display = "block"
+        }
+
+        setTimeout(showStuff, 15000);
+</script>
+
+{% endblock %}
+

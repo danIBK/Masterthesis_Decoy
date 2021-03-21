@@ -1,0 +1,58 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'global/css/all.css' %}" rel="stylesheet"/>
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet">
+    <link href="{% static 'Outro/css/custom.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+
+{% block title %}
+    Vielen Dank!
+{% endblock %}
+
+{% block content %}
+
+    <!--- Image Logo of ECON LAB --------------------------------------------------------------------------------- --->
+{#    <img src="{% static 'econlab.png' %}" alt="Innsbruck EconLab" style=" width: 100px; margin-right:5pt; float:right "/>#}
+    <!-- --------------------------------------------------------------------------------------------------------- --->
+
+    <div class="wrapper">
+        <div class="card">
+            <div class="card-header" style="text-align: center">
+                Vielen Dank für die Teilnahme an dem Experiment. </div>
+            <div class="card-body">
+                <div class="form-group" id="Feedback" style="width: 70%; height: 50%">
+                    <label for="Feedback"> Bei Ideen und Anregungen zu dem Experiment oder wenn Sie Interesse an den
+                        Ergebnissen haben, schreiben Sie bitte in die Kommentarbox. </label>
+                    <div class="controls field-comments">
+                        <textarea name="comments" id="Feedback" style="display: flex; width: 80%; padding: 5px">
+                        </textarea>
+                    </div>
+
+
+                </div>
+                <small>
+                    Wenn Sie auf 'Weiter zum Beenden' klicken werden Ihre Eingaben gespeichert und ausgewertet.
+
+                </small>
+            </div>
+
+        </div>
+    </div>
+
+    <!--- Next Button -->
+    <div style="text-align:center; margin:20px">
+        <button class="otree-btn-next btn btn-primary">Weiter zum Beenden</button>
+    </div>
+    <div>
+    <img src="{% static 'uibk_logo.png' %}" alt="UBIK" style="width:20%;margin:auto;display:block">
+    </div>
+
+
+{% endblock %}

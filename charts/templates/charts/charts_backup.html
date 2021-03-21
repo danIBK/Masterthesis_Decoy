@@ -1,0 +1,473 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+{% load humanize %}
+
+{#--- STYLES ---------------------------------------------------------------------------------------------------------#}
+
+{% block styles %}
+    <link href="{% static 'global/css/all.css' %}" rel="stylesheet"/>
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet"/>
+    <link href="{% static 'charts/css/custom.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+
+{#--- CONTENT --------------------------------------------------------------------------------------------------------#}
+
+{% block title %}
+    Investment Entscheidungen
+{% endblock %}
+
+{% block content %}
+
+    <!--- Image Logo of ECON LAB --------------------------------------------------------------------------------- --->
+    <img src="{% static 'econlab.png' %}" alt="Innsbruck EconLab" style=" width: 100px; margin-right:5pt; float:right "/>
+    <!-- --------------------------------------------------------------------------------------------------------- --->
+
+    <div class="wrapper">
+
+       <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar Block -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Block {{ section }} von {{ section_total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ section_progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar Aufgabe-->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Aufgabe {{ page }} von {{ total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+        <div class="progress-vspace"></div>
+    </div>
+
+{#    <!-- Modal -->#}
+{#    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">#}
+{#        <div class="modal-dialog" role="document">#}
+{#            <div class="modal-content">#}
+{#                <div class="modal-header">#}
+{#                    <h2 class="modal-title">#}
+{#                            {% blocktrans trimmed %}#}
+{#                                Part 1#}
+{#                            {% endblocktrans %}#}
+{#                    </h2>#}
+{#                </div>#}
+{#                <div class="modal-body">#}
+{#                    <p style="text-align:center;">#}
+{#                            {% blocktrans  trimmed %}#}
+{#                                Part 1 begins now.#}
+{#                            {% endblocktrans %}#}
+{#                    </p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Table - Allocation Choice-->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Base Setting  percentage_rf-->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+
+        <div class="card">
+            <div class="card-header">
+                <b> Ihre Verteilung </b>
+                        <br>
+                        Sie erhalten ein fiktives Vermögen von 10.000 € das Sie aufteilen dürfen.
+                        Sie haben die Wahl zwischen einem risikolosen Finanzinstrument oder einem Finanzinstrument mit
+                        einer Rendite von {{ player.market_return }} und einer Volatilität von pro Jahr.
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="container-2">
+                            <div class="box-1" id="summary-box-base">
+                                <th><h4> Anleihen </h4></th>
+                                <table id="summary-base">
+                                    <tr><th> <h6>  Durchschnittliche Rendite in letzten 12 Monate </h6> </th>
+                                    <th> <h6>  Durchschnittliche Volatilität in letzten 12 Monate </h6> </th></tr>
+                                    <hl></hl>
+                                    <tr><td>0.6%</td>
+                                        <td>0.0%</td>
+                                    </tr>
+
+                                </table>
+
+                            </div>
+                            <div class="box-1" id="summary-box-base1">
+                                <th><h4> Marktfonds </h4></th>
+                                <table id="summary-base1">
+                                    <tr>
+                                        <th> <h6>  Durchschnittliche Rendite in letzten 12 Monate </h6> </th>
+                                        <th> <h6>  Durchschnittliche Volatilität in letzten 12 Monate </h6> </th>
+                                    </tr>
+                                    <tr>
+                                        <td>7.6 %</td>
+                                        <td>20.6% </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><hr>
+
+    <!-- -------------------------------------------------------- --->
+    <!--    Summary Box Assets ------------------------------ -->
+    <!-- -------------------------------------------------------- --->
+
+
+        <div class="row">
+                <div class="col-8">
+                        <div class="box-1">
+                            <table class="btn btn-light btn-table" style="width: -webkit-fill-available" cellpadding="5%">
+                                <tr>
+                                    <th> Asset </th>
+                                    <th> Anteil in € </th>
+                                    <th> Anteil in % </th></tr>
+                                <tr>
+                                    <td> A </td>
+                                    <td> <input class="form-control-static" id="asset_a" type="float" min="0" max="10000"
+                                                onchange="updateValueA(this.value);"> </td>
+                                    <td> <div class="input-group" style="width:70%;">
+                                        <input class="form-control center" type="text" id="percentage_rf_text"
+                                               name="percentage_rf" min="0" max="100" step="0.01"
+                                               onchange="updatepercentage_rf_text(this.value); validateRFInput();" value="" required>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">% </div> </div></div>
+                                    </td></tr>
+
+                                <tr>
+                                    <td> B </td>
+                                    <td> <input class="form-control-static" id="asset_b" type="float" min="0" max="10000"
+                                    onchange="updateValueB(this.value); validateMarketInput();"> </td>
+                                    <td> <div class="input-group" style="width:70%;">
+                                            <input class="form-control center" type="text" id="percentage_market_text"
+                                                   name="percentage_market" min="0" max="100" step="0.01"
+                                                   onchange="updatepercentage_market_text(this.value); validateMarketInput(); " value="" required>
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">%</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                </div>
+
+    <!-- -------------------------------------------------------- --->
+    <!--    Die Verteilungsschieber ------------------------------ -->
+    <!-- -------------------------------------------------------- --->
+
+                    <div class="col-4">
+{#                            <td style="padding-left: 30px">#}
+                         <label class="btn btn-light" for="percentage_rf" >
+                                    % risikolose Anleihen
+                         </label>
+
+                        <input class="form-control-range" type="range" name="percentage_rf" id="percentage_rf_range"
+                               value=""  min="0" max="100" step="0.01" onchange="updatepercentage_rf_range(this.value);" required>
+                        <div style="width:15%; float:left; visibility:hidden;">.</div>
+
+
+
+
+
+                    {#                            <td style="padding-left: 30px">#}
+    <!-- --------- Balken Zwei Draft -----------------------------------------
+    --------------------------------------------------------------------------
+                         <label class="btn btn-light" for="percentage_rf" >
+                                    % Risikobehaftetes Finanzinstrument
+                         </label>
+
+                        <input class="form-control-range" type="range" name="percentage_market" id="percentage_market_range"
+                               value=""  min="0" max="100" step="0.01" onchange="updatepercentage_market_text(this.value);" required>
+                        <div style="width:15%; float:left; visibility:hidden;">.</div>
+
+                        <div class="input-group" style="width:70%;">
+                            <input class="form-control center" type="text" id="percentage_market_text" min="0" max="100"
+                                   step="0.01" onchange="updatepercentage_market_range(this.value); validateTextInput();" value="" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+
+         ------------------- Ende Balken Zwei Draf  -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    <!-- ------------------------------------------------------------------------------------------------------- -->
+    <!-- Setting WTIH decoy percentage_rf-->
+    <!-- ------------------------------------------------------------------------------------------------------- -->
+{#    <div class="card">#}
+{#        <div class="card-header">#}
+{#            Bitte teilen Sie Ihr Vermögen auf die Folgenden Assets auf#}
+{#        </div>#}
+{#        <div class="card-body">#}
+{#            <div class="row">#}
+{#                <div class="col-8">#}
+{#                    <b> Ihre Verteilung </b>#}
+{#                    <br>#}
+{#                    Anschließend sollen Sie Ihr fiktives Vermögen von 10.000 € auf die drei ETFs aufteilen.#}
+{#                    Der nicht investierte Betrag soll in bar gehalten werden. Die durchschnittliche Rendite und Volatilität#}
+{#                    pro Jahr von ETF 1,2 und 3 sind bekannt:#}
+{#                </div>#}
+{##}
+{#                <div class="col-4">#}
+{##}
+{#                    <input class="form-control-range" type="range" name="percentage_decoy" id="percentage_decoy_range"#}
+{#                               value="" min="0" max="100" step="0.01" onchange="updatepercentage_decoy_text(this.value);" required>#}
+{#                        <div style="width:15%; float:left; visibility:hidden;">.</div>#}
+{##}
+{#                        <div class="input-group" style="width:70%;">#}
+{#                            <input class="form-control center" type="text" id="percentage_decoy_text" value="" min="0"#}
+{#                                   max="100" step="0.01" onchange="updatepercentage_decoy_range(this.value); validateTextInput();" required>#}
+{#                            <div class="input-group-append">#}
+{#                                <span class="input-group-text">%</span>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+{#    {% endif %}#}
+
+
+{#    <input type="range" name="percentage_market"  id="percentage_market" min="0" max="100" step="0.01" value="" onchange="updateTextInput(this.value);"required>#}
+{#    <label class="btn btn-light" for="percentage_market" >#}
+{#        % risikobehaftetes Finanzinstrument#}
+{#    </label>#}
+{#    <input type="range" name="percentage_decoy" value="" id="percentage_decoy" required>#}
+{#    <label class="btn btn-light" for="percentage_rf" > % risikobehaftetes Finanzinstrument#}
+{#    </label>#}
+{#    </td>#}
+
+{##}
+{#                        <div class="row">#}
+{#                            <div class="col-8">#}
+{#                                <b>Your allocation:</b>#}
+{#                                <br>#}
+{#                                What percentage of your wealth do you want to hold in the risky stock in the next month?#}
+{#                            </div>#}
+{##}
+{##}
+{#                            <div class="col-4">#}
+{#                              <p class="text-muted small" style="float:left; margin-bottom:5px;">#}
+{#                                all in cash <br> 0%#}
+{#                              </p>#}
+{#                              <p class="text-muted small" style="float:right; text-align:right; margin-bottom:5px;">#}
+{#                                all in risky stock <br> 100%#}
+{#                              </p>#}
+{##}
+{#                              <input id="rangeInput" class="form-control-range" name="investment" type="range" min="0.0" max="100.0" step="0.01" value="" onchange="updateTextInput(this.value);" required>#}
+{#                              <div style="width:15%; float:left; visibility:hidden;">.</div>#}
+{#                              <div class="input-group" style="width:70%;">#}
+{#                                  <input class="form-control center" type="text" id="textInput" min="0" max="100" step="0.01" onchange="updateRangeInput(this.value); validateTextInput();" value="" required>#}
+{#                                  <div class="input-group-append">#}
+{#                                      <span class="input-group-text">%</span>#}
+{#                                  </div>#}
+{#                              </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+
+<!-- Pie Chart -->
+
+<!-- Chart -->
+    <div class="card">
+        <div class="chart" style="width: 50%; height: 380px; float:left">
+            <div id="container" style="height: 350px;"></div>
+        </div>
+    </div>
+
+
+
+
+
+
+<!-- Next Button -->
+<div id="nextbutton" style="margin-left: 45%; text-align: right; padding-top:5px; visibility: visible;">
+    {% next_button %}
+</div>
+
+    <div>
+    <img src="{% static 'uibk_logo.png' %}" alt="UBIK" style="width:20%;margin:auto;display:block">
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    <!-- ---------------------------- -->
+    <!-- Google Pie Charts javascript -->
+    <!-- ---------------------------- -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{% static 'js/percentage.js' %}"></script>
+
+
+    <script type="text/javascript">
+    // Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+    {#var a = parseFloat(document.getElementById('percentage_rf_text').value);#}
+    {#var b = 5;#}
+  var data = google.visualization.arrayToDataTable([
+  ['Verteilung', 'Investierter Betrag'],
+  ['Risikoloser Anteil', 10],
+  ['Risikobehafterer Anteil', 10],
+  {#['Risikobehafteter Anteil 2', 4],#}
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Ihre Verteilung', 'width':550, 'height':400};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/boost.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <script>
+        var data1 = {{ prices1|json }};
+        var data2 = {{ returns1|json  }};
+
+
+
+    </script>
+
+    {# Update fields scripts    #}
+
+
+{#   ----------------------------------- #}
+{#Script for the HighChart graph and data#}
+{#   ----------------------------------- #}
+<script>
+Highcharts.chart('container', {
+  chart: {
+    type: 'line'
+  },
+  title: {
+    text: 'Price Series'
+  },
+  subtitle: {
+    text: 'Assets'
+  },
+  xAxis:{
+      title: {
+          text:"day"
+      },
+          {#categories: []#}
+  },
+  yAxis: {
+    title: {
+      text: 'Price'
+    },
+      {#categories: []#}
+  },
+  plotOptions: {
+    line: {
+      dataLabels: {
+        enabled: false
+      },
+      enableMouseTracking: true
+    }
+  },
+  series:
+  {#js_vars.highcharts_series#}
+      [{
+          name: 'ETF A',
+          data: data1
+      }, {
+          name: 'ETF B',
+          data:
+          [100,100.728887, 101.1138416,
+99.62266837,98.84948156,98.30885145,99.32738692,99.38950129,100.1269033,100.7019981,98.17088058,98.65163123,100.5015558,
+100.4419982,100.5996784,101.1614084,101.6966077,102.1725642,101.8806494,101.931042,102.6223688,102.9047041,102.4349912,
+103.2068161,103.4264703,103.5129962,100.6416727,99.41362586,99.95648687,101.5195469,101.564071,99.91315079,100.3014818,
+102.1340341,101.6192821,100.1845365,100.9167422,100.4027809,98.53562314,99.06645015,98.5309278,97.29604405,94.17298631,
+87.27992257,85.10320971,76.44956612,81.30687435,86.95104798,84.92997376,83.48491458,79.7026858,84.77326504,82.89927682,
+86.12289297,88.07742849,90.27240154,86.24676503,84.44781318,84.74182816,86.9137149,83.48975306,83.06454607,83.47131979,
+83.21606033,83.53949503,83.98953553,83.87906432,83.92055294,84.05513071,83.02947568,84.1942551,83.37860489,84.68242985,
+83.10761837,82.4626074,82.91290517,83.30095091,83.28870221,83.72934513,84.34128693,84.79353646,83.54304645,83.57968647,
+83.82093678,82.77041269,83.37643589,83.84199444,84.16241255,84.29453605,81.95630906,81.08399183,80.82373932,80.38683138,
+80.87531615,80.99987803,81.24793865,81.44485431,80.99941403,80.63301564,79.32232898,79.09569901,
+          ]
+      }]
+});
+</script>
+
+    <!-- Adjust slider looks -->
+    <style>
+        .myclass::-webkit-slider-thumb {
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            border: 1px solid #000000;
+            height: 24px !important;
+            width: 16px !important;
+            border-radius: 3px !important;
+            background: rgba(0, 51, 97, 1) !important;
+            cursor: pointer !important; !important;
+            -webkit-appearance: button !important;
+            margin-top: -10px !important;}
+
+        input[type=range] {
+            -webkit-appearance: button;
+            margin: 8px 0;
+            width: 100%;}
+
+
+
+        input[type=range]:focus {
+            outline: none;     }
+
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8.4px;
+            cursor: pointer;
+            animate: 0.2s;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            background: rgba(0, 51, 97, .6);
+            border-radius: 1.3px;
+            border: 0.2px solid #010101;}
+
+
+        input[type=range]::-webkit-slider-thumb {
+            border: 0px;
+            height: 0px;
+            width: 0px;
+            border-radius: 0px;
+            -webkit-appearance: button;    }
+
+    </style>
+
+
+{% endblock %}

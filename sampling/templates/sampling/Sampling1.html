@@ -1,0 +1,1020 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+{% load humanize %}
+
+
+{#--- STYLES ---------------------------------------------------------------------------------------------------------#}
+
+{% block styles %}
+    <link href="{% static 'global/css/all.css' %}" rel="stylesheet"/>
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet"/>
+    <link href="{% static 'sampling/css/custom.css' %}" rel="stylesheet"/>
+    <link href="{% static 'int/css/custom_instructions.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+
+{#--- CONTENT --------------------------------------------------------------------------------------------------------#}
+
+{% block title %}
+    {% if page is 0 %}
+      Part {{ part }} | Initial allocation
+    {% else %}
+      Part {{ part }} | Month {{ page }} / 5
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">
+                        {% if part == 1 %}
+                            {% blocktrans trimmed %}
+                                Part 1
+                            {% endblocktrans %}
+                        {% elif part == 2 %}
+                            {% blocktrans trimmed %}
+                                Part 2
+                            {% endblocktrans %}
+                        {% else %}
+                            {% blocktrans trimmed %}
+                                Part 3
+                            {% endblocktrans %}
+                        {% endif %}
+                    </h2>
+                </div>
+                <div class="modal-body">
+                    <p style="text-align:center;">
+                        {% if part == 1 %}
+                            {% blocktrans  trimmed %}
+                                Part 1 begins now.
+                            {% endblocktrans %}
+                        {% elif part == 2 %}
+                            {% blocktrans  trimmed %}
+                                Part 2 begins now.
+                            {% endblocktrans %}
+                        {% else %}
+                            {% blocktrans  trimmed %}
+                                Part 3 begins now.
+                            {% endblocktrans %}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div class="modal fade" id="instModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:850px;">
+            <div class="modal-content instructions-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">{% trans "Instructions" %}</h5>
+                </div>
+                <hr>
+                <div class="modal-body">
+
+                    <p class="instrheading">
+                        The Experiment
+                    </p>
+
+                    <p align="justify">
+                        {% blocktrans trimmed %}
+                            The experiment consists of three parts.
+                            In each of the three parts, you make investment decisions in a financial market.
+                            In each part,
+                            you have to decide in each of five months/rounds, which percentage of your wealth you want to
+                            invest in the risky stock shown in this part.
+                            The wealth not invest is held in cash.
+                        {% endblocktrans %}
+                    </p>
+                    <p align="justify">
+                        {% blocktrans trimmed %}
+                            The risky stocks' returns in all parts are based on a distribution of returns from actual historical data
+                            of large stock indices from the last 20 years.
+                            During this time, the stock indices' development was characterized by
+                            fluctuations.
+                            The distribution of daily returns for the risky stocks corresponds to
+                            earning an average daily return of 0.03% (that corresponds to an average yearly return of 6.44%) with a standard
+                            deviation of daily returns of 2.36%. <br>
+                            Here are some examples on the likelihood of various price fluctuations:
+                        {% endblocktrans %}
+                    </p>
+                    <ul>
+                        <li>
+                            In 50 out of 100 cases, the daily return is between -0.60% and 0.73%.
+                        </li>
+                        <li>
+                            In 90 out of 100 cases, the daily return is between -2.77% and 2.77%.
+                        </li>
+                        <li>
+                            In 95 out of 100 cases, the daily return is between -6.06% and 6.32%.
+                        </li>
+                    </ul>
+
+                    <hr>
+
+                    <p class="instrheading">
+                        Procedure
+                    </p>
+
+                    <p align="justify">
+                        {% blocktrans trimmed %}
+                            Each of the three part consists of five months.
+                            At the start of each month you can invest between 0% and 100% of your wealth in the respective risky stock.
+
+                            If you invest less than 100% of your wealth in the risky stock, the amount not
+                            invested in the risky stock is held in cash.
+                        {% endblocktrans %}
+                    </p>
+                    <p align="justify">
+                        {% blocktrans trimmed %}
+                            Each month consists of 20 trading days and therefore contains 20 daily returns.
+                            Every 0.5 seconds, one daily return from
+                            the distribution described above
+                            is realized and displayed on the screen.
+                        {% endblocktrans %}
+                    </p>
+
+                    <hr>
+
+                    <p class="instrheading">
+                        Payment
+                    </p>
+
+                    <p class="instrpar">
+                        {% blocktrans trimmed %}
+                            At the end of the experiment, <b>one</b> of the five months from <b>one</b> of the three parts will be randomly selected
+                            to determine your payment.
+                            <br>
+                            Your percentage return from this randomly selected month
+                            times three is then added to an endowment
+                            of <b>EUR 5</b>.
+                        {% endblocktrans %}
+                    </p>
+                    <p class="instrpar">
+                        <i>
+                            {% blocktrans trimmed %}
+                                <u>Example:</u> If you invest 70% of your wealth in the risky stock in the randomly selected
+                                month and the stock's return in this month is 15%, then <u>your</u> return from this month
+                                will be 70% x 15% = 10.5%. <br>
+                                Your payment from this experiment is then EUR 5 x (1 + 10.5% x 3) = EUR 6.58.
+                            {% endblocktrans %}
+                        </i>
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <div style="text-align: right; padding-top: 5pt">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if page is not 0 %}
+
+    <!-- Return display -->
+        <div style="width:5%; float:left; text-align: right; margin-bottom: 0px; background: #656565; color: #656565;">.</div>
+        <div style="width:10%; float:left; text-align: right; margin-bottom: 0px; background: #656565; color: #e3e3e3">
+            Return
+        </div>
+        <div id="return" style="width: 12.5%; float:left; text-align: center; margin-bottom: 0px; background: #656565;" class="btn-light"> . </div>
+
+    <!-- Price display -->
+        <div style="width:5%; float:left; text-align: right; margin-bottom: 0px; background: #656565; color: #656565;">.</div>
+        <div style="width:10%; float:left; text-align: right; margin-bottom: 0px; background: #656565; color: #e3e3e3">
+            Price
+        </div>
+        <div id="price" style="width: 12.5%; float:left; text-align: center; margin-bottom: 0px; background: #656565;" class="btn-light"> . </div>
+        <div style="width:10%; float:left; text-align: right; margin-bottom: 0px; background: #656565; color: #656565;">.</div>
+
+        <div style="width:35%; float:right; text-align: center; margin-bottom: 0px; background: #656565; color: #e3e3e3">
+            History
+        </div>
+
+    <!-- Chart -->
+        <div class="chart" style="width: 65%; height: 380px; float:left">
+            <div id="container" style="height: 350px;"></div>
+        </div>
+
+    <!-- History Table -->
+        <div id="history" style="width: 35%; height: 380px; float:right; background-color: #656565; color: #e6e6e6">
+            <table class="row table-responsive center small">
+                <tr>
+                    <td>
+                        Month
+                    </td>
+{#                    <td>#}
+{#                        Initial wealth#}
+{#                    </td>#}
+                    <td>
+                        Percentage in risky stock
+                    </td>
+                    <td style="width: 80px;">
+                        Stock's return
+                    </td>
+                    <td style="width: 80px;">
+                        Your return
+                    </td>
+                </tr>
+                {% for block, round, month, init_wealth, percentage, end_wealth, mreturn, ownreturn in history %}
+                    {% if month is not 0 %}
+                    <tr>
+                        <td>
+                            {{ month }}
+                        </td>
+{#                        <td>#}
+{#                            {{ init_wealth|floatformat:2 }}#}
+{#                        </td>#}
+                    <td>
+                        {{ percentage|floatformat:2 }}
+                    </td>
+                    {% if month == page %}
+                    <td id="mreturn{{ month }}" style="visibility: hidden">
+                    {% else %}
+                    <td id="mreturn{{ month }}" style="visibility: visible">
+                    {% endif %}
+                        {{ mreturn|floatformat:2 }} %
+                    </td>
+                    {% if month == page %}
+                    <td id="ownreturn{{ month }}" style="visibility: hidden">
+                    {% else %}
+                    <td id="ownreturn{{ month }}" style="visibility: visible">
+                    {% endif %}
+                        {{ ownreturn|floatformat:2 }} %
+                    </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+
+        <div style="margin-left: 45%; margin-right:5%; text-align: center; padding-top: 5pt; float:left">
+            <div id="start" class="btn btn-primary flash-button">Start Month {{ page }}</div>
+        </div>
+
+    {% endif %}
+
+    <button type="button" class="btn btn-light" style="text-align: center; padding-top: 5pt; float:right" data-toggle="tooltip" data-placement="bottom" title="Open instructions" onclick="openInstructions();">
+        <i class="fas fa-info-circle fa-2x"></i>
+    </button>
+
+
+    <!-- Input Fields -->
+    {% if page < 5 %}
+        {% if page is 0 %}
+        <div id="input" style="isibility: visible">
+        {% else %}
+        <div id="input" style="visibility: hidden">
+        {% endif %}
+            <div class="card" style="width:100%; padding-top: 5pt;">
+                <div class="card-header">
+{#                    {% if page is not 0 %}#}
+{#                        {% if end_wealth > init_wealth %}#}
+{#                            Your wealth increased from {{ init_wealth|floatformat:2 }} to <b>{{ end_wealth|floatformat:2 }} Taler</b> in this month.#}
+{#                        {% elif end_wealth < init_wealth %}#}
+{#                            Your wealth decreased from {{ init_wealth|floatformat:2 }} to <b>{{ end_wealth|floatformat:2 }} Taler</b> in this month.#}
+{#                        {% else %}#}
+{#                            Your wealth stayed the same at <b>{{ end_wealth|floatformat:2 }} Taler</b> in this month.#}
+{#                        {% endif %}#}
+{#                        The return of the risky asset in this month was {{ mreturn|floatformat:2 }}%.#}
+{#                    {% else %}#}
+{#                        Your wealth is {{ init_wealth|floatformat:2 }} Taler.#}
+{#                    {% endif %}#}
+                    {% if page is 0 %}
+                        Please enter your initial allocation.
+                    {% else %}
+                        Please enter your decisions.
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        {% if page is not 0 %}
+                        <div class="row">
+                            <div class="col-7">
+                                Please state your satisfaction with the stock on a scale ranging from -3 to 3, where
+                                -3 indicates 'very unsatisfied' and 3 indicates 'very satisfied'.
+                            </div>
+                            <div class="col-5">
+                                <table>
+                                    <tr>
+                                        <td style="width: 100px"></td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="satisfaction" value="-3" id="satisfaction1"><br>
+                                            <label class="btn" for="satisfaction1">-3</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="satisfaction" value="-2" id="satisfaction2"><br>
+                                            <label class="btn" for="satisfaction2">-2</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="satisfaction" value="-1" id="satisfaction3"><br>
+                                            <label class="btn" for="satisfaction3">-1</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="satisfaction" value="0" id="satisfaction4"><br>
+                                            <label class="btn" for="satisfaction4">0</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="satisfaction" value="1" id="satisfaction5"><br>
+                                            <label class="btn" for="satisfaction5">1</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="satisfaction" value="2" id="satisfaction6"><br>
+                                            <label class="btn" for="satisfaction6">2</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="satisfaction" value="3" id="satisfaction7"><br>
+                                            <label class="btn" for="satisfaction7">3</label>
+                                        </td>
+                                        <td style="width: 30px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted small" style="text-align: center" colspan="2">
+                                            very unsatisfied
+                                        </td>
+                                        <td colspan="5"></td>
+                                        <td class="text-muted small" style="text-align: center">
+                                            very satisfied
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-7">
+                                If you were an analyst, would your recommendation for the stock be
+                                <i>SELL</i>, <i>HOLD</i> or <i>BUY</i>?
+                            </div>
+                            <div class="col-5 center">
+                                <table>
+                                    <tr>
+                                        <td style="width: 100px"></td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="rate" value="1" id="rate1" required><br>
+                                            <label class="btn" for="rate1">1</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="rate" value="2" id="rate2" required><br>
+                                            <label class="btn" for="rate2">2</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="rate" value="3" id="rate3" required><br>
+                                            <label class="btn" for="rate3">3</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="rate" value="4" id="rate4" required><br>
+                                            <label class="btn" for="rate4">4</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="rate" value="5" id="rate5" required><br>
+                                            <label class="btn" for="rate5">5</label>
+                                        </td>
+{#                                        <td class="center" style="width:15%">#}
+{#                                            <input type="radio" name="rate" value="6" id="rate6" required><br>#}
+{#                                            <label class="btn" for="rate6">6</label>#}
+{#                                        </td>#}
+{#                                        <td class="center" style="width:15%">#}
+{#                                            <input type="radio" name="rate" value="7" id="rate7" required><br>#}
+{#                                            <label class="btn" for="rate7">7</label>#}
+{#                                        </td>#}
+                                        <td style="width: 30px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"></td>
+                                        <td class="text-muted small" style="text-align: center" colspan="1">
+                                            strong sell
+                                        </td>
+                                        <td class="text-muted small" style="text-align: center" colspan="1">
+                                            sell
+                                        </td>
+                                        <td class="text-muted small" style="text-align: center">
+                                            hold
+                                        </td>
+                                        <td class="text-muted small" style="text-align: center">
+                                            buy
+                                        </td>
+                                        <td class="text-muted small" style="text-align: center">
+                                            strong buy
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-7">
+                                How risky do you perceive this stock on the basis of its past returns?
+                            </div>
+                            <div class="col-5">
+                                <table>
+                                    <tr>
+                                        <td style="width: 100px"></td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="risk" value="1" id="risk1"><br>
+                                            <label class="btn" for="risk1">1</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="risk" value="2" id="risk2"><br>
+                                            <label class="btn" for="risk2">2</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="risk" value="3" id="risk3"><br>
+                                            <label class="btn" for="risk3">3</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="risk" value="4" id="risk4"><br>
+                                            <label class="btn" for="risk4">4</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="risk" value="5" id="risk5"><br>
+                                            <label class="btn" for="risk5">5</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="risk" value="6" id="risk6"><br>
+                                            <label class="btn" for="risk6">6</label>
+                                        </td>
+                                        <td class="center" style="width:15%">
+                                            <input type="radio" name="risk" value="7" id="risk7"><br>
+                                            <label class="btn" for="risk7">7</label>
+                                        </td>
+                                        <td style="width: 30px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted small" style="text-align: center" colspan="2">
+                                            not risky at all
+                                        </td>
+                                        <td colspan="5"></td>
+                                        <td class="text-muted small" style="text-align: center">
+                                            very risky
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        {% comment %}
+                        <hr>
+                        <div class="row">
+                            <div class="col-8">
+                                At what price would you feel neutral about the selling the asset, i.e. being neither
+                                satisfied nor unsatisfied about the sale?
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <input class="form-control" name="investment" type="number" min="0" max="200" required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Taler</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endcomment %}
+                        <hr>
+                        <div class="row">
+                            <div class="col-8">
+                                What is your estimate of the most likely stock price at the end of the next month?
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <input id="fc" class="form-control" name="fc" type="number" min="0" step="0.01" required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Taler</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-8">
+                                What is your <i>pessimistic</i> estimate for the stock price at the end of the next month?
+                                <p class="text-muted small">
+                                    (only in 5% of cases the stock price will be <i>below</i> this price)
+                                </p>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <input id="fc_p05" class="form-control" name="fc_p05" type="number" min="0" step="0.01" required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Taler</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-8">
+                                What is your <i>optimistic</i> estimate for the stock price at the end of the next month?
+                                <p class="text-muted small">
+                                    (only in 5% of cases the stock price will be <i>above</i> this price)
+                                </p>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <input id="fc_p95" class="form-control" name="fc_p95" type="number" min="0" step="0.01" required onchange="validateConfidenceIntervals();">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Taler</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-8">
+                                <b>Your allocation:</b>
+                                <br>
+                                What percentage of your wealth do you want to hold in the risky stock in the next month?
+                            </div>
+                            <div class="col-4">
+                              <p class="text-muted small" style="float:left; margin-bottom:5px;">
+                                all in cash <br> 0%
+                              </p>
+                              <p class="text-muted small" style="float:right; text-align:right; margin-bottom:5px;">
+                                all in risky stock <br> 100%
+                              </p>
+                              <input id="rangeInput" class="form-control-range" name="investment" type="range" min="0" max="100" step="0.01" value="" onchange="updateTextInput(this.value);" required>
+                              <div style="width:15%; float:left; visibility:hidden;">.</div>
+                              <div class="input-group" style="width:70%;">
+                                  <input class="form-control center" type="text" id="textInput" min="0" max="100" step="0.01" onchange="updateRangeInput(this.value); validateTextInput();" value="" required>
+                                  <div class="input-group-append">
+                                      <span class="input-group-text">%</span>
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+    <!-- Next Button -->
+    {% if page is 0 %}
+        <div id="nextbutton" style="margin-left: 45%; text-align: right; padding-top:5px; visibility: visible;">
+            {% next_button %}
+        </div>
+    {% else %}
+        {% if page is 5 %}
+            <div id="input" style="visibility: hidden">
+                <div class="card" style="width:100%; padding-top: 5pt;"></div>
+            </div>
+            <div id="nextbutton" style="margin-left: 45%; text-align: right; padding-top:5px; visibility: hidden;">
+            {# <button class="btn btn-primary" type="button" onclick="validateConfidenceIntervals();">Next</button> #}
+            {% next_button %}
+        {% else %}
+            <div id="nextbutton" style="margin-left: 45%; text-align: right; padding-top:5px; visibility: hidden;">
+            {# <button class="btn btn-primary" type="button" onclick="validateConfidenceIntervals();">Next</button> #}
+            {% next_button %}
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{#    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>#}
+{#    tooltip does not work if jquary is included twice! #}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <script>
+        $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+    <script>
+        function openInstructions() {
+            $("#instModal").modal('show');
+        };
+    </script>
+
+
+    <script>
+
+        var data1 = {{ prices|json }};
+        var data2 = {{ returns|json }};
+        var page = {{ page|json }}-1;
+
+        var init_number_returns;
+        if (page == 0) {
+            init_number_returns = 20 * page
+        }
+        else {
+            init_number_returns = 20 * page + 1
+        }
+
+        var chart = Highcharts.chart('container', {
+
+            chart: {
+            //    type: 'area'
+                type: 'line',
+                backgroundColor: '#656565'
+            },
+
+            credits: {enabled: false},
+            legend: {enabled: false},
+            title: {text: ''},
+            //  tooltip: {enabled: true},
+            tooltip: {
+                shared: true,
+                useHTML: true,
+                headerFormat: '<small>Day {point.key}</small><table>',
+                pointFormat: '<tr><td>Price: </td>' + '<td style="text-align: right"><b>{point.y} Taler</b></td></tr>',
+                footerFormat: '</table>',
+                valueDecimals: 2
+            },
+
+            plotOptions: {
+                series: {
+                      name: "Price",
+                      borderWidth: 0.05,
+                      pointWidth: 1.5, // Defaults to 0.1
+                      groupPadding: 0,
+                      animation: false,
+                      color: 'rgb(251, 139, 30)'
+                }
+            },
+
+            xAxis: {
+              min: -2,
+              max: 105,
+              tickInterval: 20,
+              gridLineWidth: 0,
+              minorGridLineWidth: 0,
+              lineWidth:0.5,
+              lineColor:"gray",
+                labels: {
+                    style: {
+                        color: '#f8f9fa'
+                    }
+                },
+                plotLines: [{
+                    color: 'gray',
+                    width: 2,
+                    value: 20
+                },
+                {
+                    color: 'gray',
+                    width: 2,
+                    value: 40
+                },
+                {
+                    color: 'gray',
+                    width: 2,
+                    value: 60
+                },
+                {
+                    color: 'gray',
+                    width: 2,
+                    value: 80
+                },
+                {
+                    color: 'gray',
+                    width: 2,
+                    value: 100
+                },
+{% comment %}
+                {
+                    color: 'gray',
+                    width: 2,
+                    value: 180
+                },
+               {
+                    color: 'gray',
+                    width: 2,
+                    value: 210
+                },
+                {
+                    color: 'gray',
+                    width: 2,
+                    value: 240
+                },
+                {
+                    color: 'gray',
+                    width: 2,
+                    value: 270
+                },
+                {
+                    color: 'gray',
+                    width: 2,
+                    value: 300
+                },
+                {
+                    color: 'gray',
+                    width: 2,
+                    value: 330
+                },
+                {
+                    color: 'gray',
+                    width: 2,
+                    value: 360
+                }{% endcomment %}
+                ]
+                              },
+
+            yAxis: {
+                title: {
+                    text: 'Price (in Taler)',
+                    style: {
+                        color: '#f8f9fa'
+                    }
+                },
+                // min: 50,
+                // max: 150,
+                tickPositioner: function() {
+                  var positions = [],
+                    ext = this.getExtremes(),
+                    yMax = Math.round(ext.max),
+                    yMin = Math.round(ext.min),
+                    dMax = Math.ceil(ext.dataMax),
+                    dMin = Math.floor(ext.dataMin);
+
+                    if ((ext.dataMax - ext.dataMin) != 0) {
+
+                      NegDiff = 50 - Math.floor(dMin / 5) * 5;
+                      PosDiff = Math.ceil(dMax / 5) * 5 - 50;
+
+                      if (NegDiff < PosDiff){
+                        if (PosDiff == 0) {
+                          increment = 5;
+                        }
+                        else {
+                          increment = PosDiff/4;
+                        }
+
+                        while (PosDiff % increment != 0) {
+                          increment+=5;
+                        }
+                        for (var tick = 50 - PosDiff; tick <= 50 + PosDiff; tick+=increment) {
+                          positions.push(tick);
+                        }
+                      }
+                      else if (Math.abs(NegDiff) >= PosDiff){
+                        if (NegDiff == 0) {
+                          increment = 5;
+                        }
+                        else {
+                          increment = Math.abs(NegDiff)/4;
+                        }
+
+                        while (Math.abs(NegDiff) % increment != 0) {
+                          increment+=5;
+                        }
+                        for (var tick = 50 - NegDiff; tick <= 50 + NegDiff; tick+=increment) {
+                          positions.push(tick);
+                        }
+                      }
+                    }
+
+                    return positions;
+                  },
+                // tickInterval: 10,
+                labels: {
+                    style: {
+                        color: '#f8f9fa'
+                    }
+                },
+                plotLines: [{
+                    color: 'gray',
+                    width: 2,
+                    value: 0
+                }]
+            },
+
+            series: [{
+                data: data1.slice(0,init_number_returns)
+            }]
+
+        });
+
+
+        var i = 0;
+
+        var time_per_return = {{ Constants.time_per_return|json }};
+        var number_of_returns
+        if (page == 0) {
+            number_of_returns = 21
+        }
+        else {
+            number_of_returns = 20;
+        }
+
+        function UpdateReturns(){
+            return1 = parseFloat(Math.round(data2.slice(init_number_returns, (number_of_returns+1)*(page+1))[i]*100)/100).toFixed(2);
+            document.getElementById("return").innerHTML = return1 + " %";
+            if (return1 < 0) {
+                document.getElementById("return").style.background = "#ff433d";
+                setTimeout(function(){
+//                    document.getElementById("return").style.background = "#f8f9fa";
+                    document.getElementById("return").style.background = "#656565";
+                    document.getElementById("return").style.color = "#e6e6e6";
+                }, 100)
+            }
+            if (return1 > 0) {
+                document.getElementById("return").style.background = "#1dcc92";
+                setTimeout(function(){
+                    document.getElementById("return").style.background = "#656565";
+                    document.getElementById("return").style.color = "#e6e6e6";
+                }, 100)
+            }
+            if (return1 = 0) {
+                document.getElementById("return").style.background = "#656565";
+                document.getElementById("return").style.color = "#e6e6e6";
+            }
+        }
+        function UpdatePrices(){
+            price1 = Math.round(data1.slice(init_number_returns, (number_of_returns+1)*(page+1))[i]*100)/100;
+            return1 = Math.round(data2.slice(init_number_returns, (number_of_returns+1)*(page+1))[i]*100)/100;
+            document.getElementById("price").innerHTML = price1;
+            if (return1 < 0) {
+                document.getElementById("price").style.background = "#ff433d";
+                setTimeout(function(){
+//                    document.getElementById("return").style.background = "#f8f9fa";
+                    document.getElementById("price").style.background = "#656565";
+                    document.getElementById("price").style.color = "#e6e6e6";
+                }, 100)
+            }
+            if (return1 > 0) {
+//                document.getElementById("return").style.background = "#33ff00";
+                document.getElementById("price").style.background = "#1dcc92";
+                setTimeout(function(){
+                    document.getElementById("price").style.background = "#656565";
+                    document.getElementById("price").style.color = "#e6e6e6";
+                }, 100)
+            }
+            if (return1 = 0) {
+                document.getElementById("price").style.background = "#656565";
+                document.getElementById("price").style.color = "#e6e6e6";
+            }
+        }
+
+        $('#start').click(function () {
+
+            document.getElementById("start").style.visibility = "hidden";
+
+            var interval = setInterval(function () {
+                chart.series[0].addPoint(data1.slice(init_number_returns, (number_of_returns+1)*(page+1))[i], true, false, true);
+                UpdateReturns();
+                UpdatePrices();
+                i += 1;
+            }, time_per_return);
+
+            setTimeout(function() { clearInterval(interval); }, time_per_return*number_of_returns);
+
+            setTimeout(function(){
+                {% if page is not num_pages %}
+                    document.getElementById("input").style.visibility = "visible";
+                {% endif %}
+                document.getElementById("nextbutton").style.visibility = "visible";
+                document.getElementById("mreturn1").style.visibility = "visible";
+                document.getElementById("ownreturn1").style.visibility = "visible";
+                document.getElementById("mreturn2").style.visibility = "visible";
+                document.getElementById("ownreturn2").style.visibility = "visible";
+                document.getElementById("mreturn3").style.visibility = "visible";
+                document.getElementById("ownreturn3").style.visibility = "visible";
+                document.getElementById("mreturn4").style.visibility = "visible";
+                document.getElementById("ownreturn4").style.visibility = "visible";
+                document.getElementById("mreturn5").style.visibility = "visible";
+                document.getElementById("ownreturn5").style.visibility = "visible";
+                document.getElementById("mreturn6").style.visibility = "visible";
+                document.getElementById("ownreturn6").style.visibility = "visible";
+            }, time_per_return*number_of_returns+500);
+
+        });
+
+
+        // the button action
+        $('#button').click(function () {
+            var extremes = chart.yAxis[0].getExtremes();
+
+            chart.renderer.label(
+                'dataMax: ' + extremes.dataMax + '<br/>' +
+                    'dataMin: ' + extremes.dataMin + '<br/>' +
+                    'max: ' + extremes.max + '<br/>' +
+                    'min: ' + extremes.min + '<br/>',
+                100,
+                100
+            )
+                .attr({
+                    fill: '#FCFFC5',
+                    zIndex: 8
+                })
+                .add();
+
+            $(this).attr('disabled', true);
+        });
+
+    </script>
+
+    <script>
+      function updateTextInput(val) {
+            document.getElementById('textInput').value=val;
+          }
+      function updateRangeInput(val) {
+            document.getElementById('rangeInput').value=val;
+          }
+      function validateTextInput(){
+        if (parseFloat(document.getElementById('textInput').value) < 0) {
+          document.getElementById('textInput').value = 0;
+        }
+        if (parseFloat(document.getElementById('textInput').value) > 100) {
+          document.getElementById('textInput').value = 100;
+        }
+      }
+    </script>
+
+    <script>
+      function validateConfidenceIntervals() {
+            fc = parseFloat(document.getElementById('fc').value),
+              fc_p05 = parseFloat(document.getElementById('fc_p05').value),
+              fc_p95 = parseFloat(document.getElementById('fc_p95').value);
+            if (fc_p05 > fc_p95) {
+              window.alert("Your pessimistic estimate has to be equal or lower than your optimistic estimate.");
+              document.getElementById('fc_p95').value = "";
+            }
+            if (fc < fc_p05 || fc > fc_p95) {
+              window.alert("Your point estimate has to be within your pessimistic and optimistic estimates.");
+              document.getElementById('fc_p95').value = "";
+            }
+          }
+    </script>
+
+    {% if page == 0 %}
+        <script>
+            $(function() {
+                $("#myModal").modal('show');
+            });
+
+            setTimeout(function(){
+                $('#myModal').modal('hide');
+            }, 3000);
+        </script>
+    {% endif %}
+
+
+    <!-- Adjust slider looks -->
+    <style>
+        .myclass::-webkit-slider-thumb {
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            border: 1px solid #000000;
+            height: 24px !important;
+            width: 16px !important;
+            border-radius: 3px !important;
+            background: rgba(0, 51, 97, 1) !important;
+            cursor: pointer !important !important;
+            -webkit-appearance: none !important;
+            margin-top: -10px !important;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            margin: 18px 0;
+            width: 100%;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8.4px;
+            cursor: pointer;
+            animate: 0.2s;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            background: rgba(0, 51, 97, .6);
+            border-radius: 1.3px;
+            border: 0.2px solid #010101;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            border: 0px;
+            height: 0px;
+            width: 0px;
+            border-radius: 0px;
+            -webkit-appearance: none;
+        }
+
+    </style>
+    <script>
+
+        $(document).ready(function () {
+            $('input[type=range]').on('input change', function () {
+                $('input[type=range]').addClass('myclass');
+            });
+
+        });
+    </script>
+
+{% endblock %}

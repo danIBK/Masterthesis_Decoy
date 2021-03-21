@@ -1,0 +1,228 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+
+
+{#--- STYLES ---------------------------------------------------------------------------------------------------------#}
+
+{% block styles %}
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet"/>
+    <link href="{% static 'sampling/css/custom.css' %}" rel="stylesheet"/>
+    <link href="{% static 'postexp/css/custom.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+
+{#--- TITLE ----------------------------------------------------------------------------------------------------------#}
+
+{% block title %}
+    {% trans "Questionnaire" %}
+{% endblock %}
+
+
+{#--- CONTENT --------------------------------------------------------------------------------------------------------#}
+
+{% block content %}
+
+    <!-- Modal ---------------------------------------------------------------------------------------------------->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="modal-title"></h5>
+                    {% blocktrans trimmed %}
+                        You have now completed all tasks. Please answer the following questions to complete the experiment.
+                    {% endblocktrans %}
+                    <div style="text-align: right; padding-top: 5pt">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel: Question(s) ------------------------------------------------------------------------------------ -->
+
+    <div class="card">
+        <div class="card card-header">
+            {% blocktrans trimmed %}
+                Please answer the following questions.
+            {% endblocktrans %}
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        {% blocktrans trimmed %}
+                            How do you see yourself:
+                        {% endblocktrans %}
+                        <br>
+                        {% blocktrans trimmed %}
+                            Are you generally a person who is willing to take risks or do you try
+                            to avoid taking risks?
+                        {% endblocktrans %}
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 10px">
+
+                    <table style="margin-left:auto;margin-right:auto;">
+                        <tr>
+                            <td class="small">
+                                <br>
+                                {% trans "not at all willing to take risks" %}
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion1" value="1" id="risk_aversion1_1" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion1_1">0</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion1" value="2" id="risk_aversion1_2" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion1_2">1</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion1" value="3" id="risk_aversion1_3" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion1_3">2</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion1" value="4" id="risk_aversion1_4" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion1_4">3</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion1" value="5" id="risk_aversion1_5" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion1_5">4</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion1" value="6" id="risk_aversion1_6" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion1_6">5</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion1" value="7" id="risk_aversion1_7" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion1_7">6</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion1" value="8" id="risk_aversion1_8" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion1_8">7</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion1" value="9" id="risk_aversion1_9" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion1_9">8</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion1" value="10" id="risk_aversion1_10" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion1_10">9</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion1" value="11" id="risk_aversion1_11" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion1_11">10</label>
+                            </td>
+                            <td class="small">
+                                <br>
+                                {% trans "very willing to take risks" %}
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <hr>
+                <div class="row">
+                    <div class="col-12">
+
+                        {% trans "People can behave differently in different situations." %}
+                        <br>
+                        {% trans "How would you rate your willingness to take risks in financial matters?" %}
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 10px">
+
+                    <table style="margin-left:auto;margin-right:auto;">
+                        <tr>
+                            <td class="small">
+                                <br>
+                                {% trans "not at all willing to take risks" %}
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion2" value="1" id="risk_aversion2_1" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion2_1">0</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion2" value="2" id="risk_aversion2_2" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion2_2">1</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion2" value="3" id="risk_aversion2_3" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion2_3">2</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion2" value="4" id="risk_aversion2_4" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion2_4">3</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion2" value="5" id="risk_aversion2_5" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion2_5">4</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion2" value="6" id="risk_aversion2_6" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion2_6">5</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion2" value="7" id="risk_aversion2_7" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion2_7">6</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion2" value="8" id="risk_aversion2_8" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion2_8">7</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion2" value="9" id="risk_aversion2_9" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion2_9">8</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion2" value="10" id="risk_aversion2_10" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion2_10">9</label>
+                            </td>
+                            <td class="center" style="width:40px;">
+                                <input type="radio" name="risk_aversion2" value="11" id="risk_aversion2_11" required>
+                                <br>
+                                <label class="btn btn-light" for="risk_aversion2_11">10</label>
+                            </td>
+                            <td class="small">
+                                <br>
+                                {% trans "very willing to take risks" %}
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    {{ form.errors }}
+
+    <div style="text-align: right; padding-top: 5pt">
+        {% next_button %}
+    </div>
+
+{% endblock %}

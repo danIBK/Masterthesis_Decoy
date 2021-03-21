@@ -1,0 +1,226 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load staticfiles otree %}
+{% load i18n %}
+{% load humanize %}
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'global/css/all.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet"/>
+    <link href="{% static 'FinLit/css/custom.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    Finanzwissensfrage
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+
+    <!--- Image Logo of ECON LAB --------------------------------------------------------------------------------- --->
+    <img src="{% static 'econlab.png' %}" alt="Innsbruck EconLab" style=" width: 100px; margin-right:5pt; float:right "/>
+     <!-- --------------------------------------------------------------------------------------------------------- --->
+
+    <div class="wrapper">
+
+       <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Block {{ section }} von {{ section_total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ section_progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Aufgabe {{ page }} von {{ total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+        <div class="progress-vspace"></div>
+    </div>
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Table - Financial Literacy -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title" > Bitte beantworten Sie folgende Fragen: </div>
+            </div>
+
+            <div class="card-body">
+                <div class="container">
+                    <div class="card-title">
+                    <b>Frage 1 </b>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                            Angenommen, Sie haben €100 auf ihrem Sparbuch und der Zinssatz beträgt 2% pro
+                            Jahr. Über wieviel verfügen Sie in 5 Jahren, wenn Sie das Geld am Sparbuch liegen lassen?
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-2 center">
+                        <input type="radio" name="interest_compounding" value=1 id="interest_compounding1" required>
+                                <br><label class = "btn btn-light" for="interest_compounding1"> Mehr als €102 </label>
+                    </div>
+                    <div class="col-2 center">
+                        <input type="radio" name="interest_compounding" value=2 id="interest_compounding2"required>
+                                <br><label class = "btn btn-light" for="interest_compounding2"> Genau €102 </label>
+                    </div>
+                    <div class="col-2 center">
+                        <input type="radio" name="interest_compounding" value=3 id="interest_compounding3" required>
+                                <br><label class = "btn btn-light" for="interest_compounding3"> Weniger als €102 </label>
+                    </div>
+                    <div class="col-2 center">
+                        <input type="radio" name="interest_compounding" value=-1 id="interest_compounding4" required>
+
+                                <br><label class = "btn btn-light" for="interest_compounding4"> Weiß ich nicht </label>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="card-title">
+                    <b>Frage 2 </b>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        Angenommen, der Zinssatz auf ihrem Sparbuch liegt bei 1% pro Jahr und die
+                        Inflationsrate bei 2% pro Jahr. Wenn Sie das Geld ein Jahr auf dem Sparbuch liegen lassen, wie
+                        viel können Sie sich dann im Vergleich zu heute kaufen?
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-2 center">
+                        <input type="radio" name="real_interest" id="real_interest2" value=2 required>
+                                <br><label class = "btn btn-light" for="real_interest2"> Mehr als heute </label>
+                    </div>
+                    <div class="col-2 center">
+                        <input type="radio" name="real_interest" id="real_interest3" value=3 required>
+                        <br><label class = "btn btn-light" for="real_interest3"> Genau gleich viel </label>
+                    </div>
+                    <div class="col-2 center">
+                        <input type="radio" name="real_interest"  id="real_interest1" value=1 required>
+                        <br><label class = "btn btn-light" for="real_interest1"> Weniger als heute </label>
+                    </div>
+                    <div class="col-2 center">
+                        <input type="radio" name="real_interest"  id="real_interest4" value=-1 required>
+                        <br><label class = "btn btn-light" for="real_interest4"> Weiß ich nicht </label>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="card-title">
+                    <b>Frage 3 </b>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        Der Kauf einer einzelnen Aktie bietet normalerweise sicherere Gewinne als der
+                        Kauf eines Aktienfonds (ein Aktienfonds besteht aus mehreren verschiedenen Aktien).
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-2 center">
+                            <input type="radio" name="diversification" id="diversification1" value=1 required>
+                            <br><label class = "btn btn-light" for="diversification1"> Richtig </label>
+                        </div>
+                        <div class="col-2 center">
+                            <input type="radio" name="diversification" id="diversification2" value=2 required>
+                            <br><label class = "btn btn-light" for="diversification2"> Falsch </label>
+                        </div>
+                        <div class="col-2 center">
+                            <input type="radio" name="diversification" id="diversification3" value=-1 required>
+                            <br><label class = "btn btn-light" for="diversification3"> Weiß ich nicht </label>
+                        </div>
+                </div>
+
+
+                <hr>
+                <div class="card-title">
+                    <b>Frage 4 </b>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        Wenn die Zinssätze steigen, was passiert dann typischerweise mit Anleihekursen?
+                    </div>
+                    <div class="col-2">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-2 center"> <input type="radio" name="bond_pricing" id="bond_pricing1" value=1 required>
+                        <br><label class = "btn btn-light" for="bond_pricing1"> Sie steigen </label> </div>
+                    <div class="col-2 center"> <input type="radio" name="bond_pricing"  id="bond_pricing2" value=2 required>
+                        <br><label class = "btn btn-light" for="bond_pricing2"> Sie fallen </label> </div>
+                    <div class="col-2 center"> <input type="radio" name="bond_pricing" id="bond_pricing3" value=3 required>
+                        <br><label class = "btn btn-light" for="bond_pricing3"> Sie bleiben gleich </label> </div>
+                    <div class="col-2 center"> <input type="radio" name="bond_pricing" id="bond_pricing4" value=4 required>
+                        <br><label class = "btn-light light" for="bond_pricing4"> Es gibt keinen Zusammenhang zwischen Anleihekursen und dem
+                            Zinssatz </label> </div>
+                    <div class="col-2 center"> <input type="radio" name="bond_pricing" id="bond_pricing5" value=-1 required>
+                        <br><label class = "btn btn-light" for="bond_pricing5"> Weiß ich nicht </label> </div>
+                </div>
+
+                <hr>
+                    <div class="card-title">
+                    <b>Frage 5 </b>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        Ein Kredit mit 15 Jahren Laufzeit erfordert in der Regel höhere monatliche Zahlungen als ein
+                        Kredit mit 30 Jahren Laufzeit. Die Gesamtzinsen, die über die Laufzeit des Kredits gezahlt
+                        werden, sind aber geringer.
+                    </div>
+                </div>
+                    <div class="col-1"></div>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-2 center"> <input type="radio" name="credit_interest" id="credit_interest1" value=1 required>
+                        <br><label class = "btn btn-light" for="credit_interest1"> Richtig </label></div>
+                    <div class="col-2 center"> <input type="radio" name="credit_interest"  id="credit_interest2" value=2 required>
+                        <br><label class = "btn btn-light" for="credit_interest2"> Falsch </label> </div>
+                    <div class="col-2 center"> <input type="radio" name="credit_interest" id="credit_interest3" value=-1 required>
+                        <br><label class = "btn btn-light" for="credit_interest3"> Weiß ich nicht </label> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ form.errors }}
+
+<!--- Next Button -->
+<div style="text-align:center; margin:20px">
+        <button class="otree-btn-next btn btn-primary">Weiter</button>
+    </div>
+    <div>
+    <img src="{% static 'uibk_logo.png' %}" alt="UBIK" style="width:20%;margin:auto;display:block">
+    </div>
+{% endblock %}

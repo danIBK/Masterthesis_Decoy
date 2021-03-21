@@ -1,0 +1,295 @@
+/* ****************************************************************************************************************** */
+/* *** Decision/Results Table *** */
+/* ****************************************************************************************************************** */
+.row>tbody>tr>th,
+.row>tbody>tr>td {
+    vertical-align: middle;
+    padding: 5px 15px;
+    height: 65px;
+    border: none;
+}
+
+
+.info {
+    padding: 15px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+.btn[disabled] {
+    opacity: 1;
+}
+
+.choice {
+    min-width: 100px;
+}
+
+.ganze_flaeche{
+  background-color:#CCC;
+  width:690px;
+  height:100px;
+  display:flex;
+  justify-content:space-around; /* Verteilung */}
+
+
+
+input[type="radio"] {
+  margin-top: -3px;
+  vertical-align: middle;
+    margin: 10px;/* Rand */
+}
+
+
+/* ****************************************************************************************************************** */
+/* *** Progress Bar *** */
+/* ****************************************************************************************************************** */
+
+/*.progress {*/
+/*    height: 15px;*/
+/*    margin-bottom: 30px;*/
+/*}*/
+
+/*.progress-bar {*/
+/*    background-color: rgba(43, 102, 154, 0.20);*/
+/*    background-image: linear-gradient(to bottom, rgba(43, 102, 154, 0.1) 0, rgba(43, 102, 154, 0.6) 100%);*/
+/*    background-repeat: repeat-x;*/
+/*}*/
+
+/*label {*/
+/*    font-weight: normal;*/
+/*    margin-bottom: 4pt;*/
+/*}*/
+
+
+/* =============================================== */
+/* Radio Input with Buttons */
+/* =============================================== */
+
+label.btn {
+    line-height: 0.7em;
+    background: none;
+    border: none;
+}
+
+input[type=radio]:checked ~ label.btn {
+    background-color: #e6e6e6;
+}
+
+
+
+.center {
+    text-align: center;
+}
+
+
+.chart {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color:#656565;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+}
+.chart:after, :before {
+    box-sizing: border-box;
+}
+
+
+/* =============================================== */
+/* Buttons */
+/* =============================================== */
+
+.btn-primary{
+	background-color: rgb(0, 51, 98, 1);
+    border-color: rgb(0, 51, 98, 1);
+}
+.btn-primary:hover{
+    background-color: rgb(0, 51, 98, 0.5);
+}
+.btn-primary:checked {
+    background-color: black;
+}
+
+.flash-button{
+	background: rgb(0, 51, 98, 1);;
+	padding:5px 10px;
+	color:#fff;
+	border:none;
+	border-radius:5px;
+
+	animation-name: flash;
+	animation-duration: 1.5s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+
+	//Firefox 1+
+	-webkit-animation-name: flash;
+	-webkit-animation-duration: 1.5s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+
+	//Safari 3-4
+	-moz-animation-name: flash;
+	-moz-animation-duration: 1.5s;
+	-moz-animation-timing-function: linear;
+	-moz-animation-iteration-count: infinite;
+}
+
+@keyframes flash {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1.0; }
+}
+
+//Firefox 1+
+@-webkit-keyframes flash {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1.0; }
+}
+
+//Safari 3-4
+@-moz-keyframes flash {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1.0; }
+}
+
+
+/* =============================================== */
+/* Boxes */
+/* =============================================== */
+
+.box {
+    text-align: center;
+    height: 100px;
+    width: 100px;
+    margin:10px;
+    line-height: 30px;
+    color: white;
+    background-color: #003362;
+    border-color: #003362;
+    font-size: x-large;
+
+}
+.box:hover {
+    background-color: rgb(0, 51, 98, 0.5);
+    border-color: rgb(0, 51, 98, 0.5);
+}
+
+
+/* =============================================== */
+/* Flex Programming Boxes */
+/* =============================================== */
+
+@media (min-width: 568px) {
+    .container-1-t{
+        display: flex;
+        padding: 5px;
+        justify-content: space-between;
+        /*align-items: flex-end;*/
+        flex-direction: row;
+        /*assing them in colums*/
+    }
+
+    .container-2 {
+        display: flex;
+        padding: 5px;
+        /*
+        justify-content: flex-start;
+        justify-content: flex-end;
+        justify-content: center;
+        justify-content: space-around;  auch space arround
+        */
+        justify-content: space-between;
+    }
+
+}
+
+.container-1-t div, .container-2 div {
+    padding: 1px 1px;
+    padding-left: 0px;
+}
+.box-1-t{
+    flex-basis:25%;
+}
+.box-2-t{
+    flex:1;
+}
+.box-3-t{
+    flex:1;
+}
+.container-2-box{
+    flex-basis: 25%;
+}
+body{
+
+}
+
+@media (min-width: 568px) {
+    .row {
+        display: flex;
+        padding: 5px;
+        justify-content: space-between;
+        /*align-items: flex-end;*/
+        flex-direction: row;
+        /*assing them in colums*/
+    }
+}
+
+/* */
+
+* {
+  box-sizing: border-box;
+}
+
+.demo-container {
+  display: flex;
+  flex-direction: row;
+  font-size: 30px;
+  text-align: left;
+}
+
+.flex-item-left {
+  /*background-color: #f1f1f1;*/
+  padding: 10px;
+  flex: 15%;
+}
+
+.flex-item-middle {
+  /*background-color: green;*/
+  padding: 10px;
+  flex: 15%;
+}
+
+.flex-item-middle1 {
+  /*background-color: yellow;*/
+  padding: 10px;
+  flex: 15%;
+}
+
+.flex-item-middle2 {
+  /*background-color: #f1f1f1;*/
+  padding: 10px;
+  flex: 15%;
+}
+
+.flex-item-right {
+  /*background-color: dodgerblue;*/
+  padding: 10px;
+  flex: 15%;
+}
+
+.flex-item-risk {
+  /*background-color: dodgerblue;*/
+  padding: 10px;
+  flex: 9%;
+}
+
+/* Responsive layout - makes a one column-layout instead of two-column layout */
+@media (max-width: 800px) {
+  .demo-container {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,210 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+{% load humanize %}
+
+{#--- STYLES ---------------------------------------------------------------------------------------------------------#}
+
+{% block styles %}
+    <link href="{% static 'global/css/all.css' %}" rel="stylesheet"/>
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet"/>
+    <link href="{% static 'charts/css/custom.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+
+
+{% block title %}
+    Anleitung Investment Entscheidung
+{% endblock %}
+
+
+{#--- CONTENT --------------------------------------------------------------------------------------------------------#}
+{% block content %}
+    <!--- Image Logo of ECON LAB --------------------------------------------------------------------------------- --->
+    <img src="{% static 'econlab.png' %}" alt="Innsbruck EconLab" style=" width: 100px; margin-right:5pt; float:right "/>
+    <!-- --------------------------------------------------------------------------------------------------------- --->
+
+
+    <!--- Progress Wrapper --------------------------------------------------------------------------------- --->
+    <div class="wrapper">
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar Block -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Block {{ section }} von {{ section_total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ section_progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar Aufgabe-->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Aufgabe {{ page }} von {{ total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+        <div class="progress-vspace"></div>
+    </div>
+    <!-- --------------------------------------------------------------------------------------------------------- --->
+    <div class="wrapper">
+        <div class="card">
+        <div class="card-header">
+            Das ganze Experiment besteht aus drei unabhängigen Teilen, in denen Sie selbständig Geld verdienen können.
+            Für Ihre erfolgreiche Teilnahme erhalten Sie eine Teilnahmegebühr von 8 Euro zusätzlich zu ihrem
+            performancebasierten Anteil, den Sie in den beiden Investment Entscheidungen in Block 1 des Experiments erzielen.
+
+            <p> Durch Ihre Performance in der ersten oder zweiten Investment Entscheidungen können Sie bis zu 3 Euro
+                dazuverdienen aber auch bis zu 3 Euro verlieren.  Dies ist dann Ihr performancebasierter Anteil. Am Ende
+                wird zufällig ausgewählt, ob ihr performancebasierter Anteil auf Basis von Investment Entscheidungen eins
+                oder zwei ausgezahlt wird. Dieser wird dann mit Ihrer Teilnahmegebühr verrechnet. Im Schnitt werden etwas über 8€ ausgezahlt.
+            </p>
+        </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                Wichtige Begrifflichkeiten
+            </div>
+            <div class="card-body">
+                <div class="btn btn-dark btn-info"> Rendite </div>
+                <div class="card-text">
+                    Bei einem Investment wie beispielsweise einem Marktfonds, erwartet man als Investor, dass der investierte Betrag zu einem gewissen Zeitpunkt in der Zukunft mehr Wert ist. Dadurch kann man den Marktfonds wieder veräußern und die Differenz aus Kaufpreis und Verkaufspreis ist die Rendite.
+                    Wir sprechen von Rendite, wenn wir den erzielten Gewinn im Verhältnis zum eingesetzten Kapital betrachten. 10€ Gewinn bezogen auf 100 Euro „Einsatz“ sind 10% Gewinn, während es noch 5% wären, hätten wir 200€ eingesetzt.
+                    Beispielsweise wenn vor einem Jahr 10 000 Euro in einen Marktfonds investiert wurden und dieser heute, ein Jahr später, für 10 500 Euro am Markt gehandelt wird. Kann er mit einem Gewinn von 500 Euro verkauft werden. Dies entspricht einer Rendite von 5% oder 0.05.
+                </div>
+            </div>
+            <hr>
+            <div class="card-body">
+                <div class="btn btn-dark btn-info">Volatilität</div>
+                <div class="card-text">
+                    Die Entwicklung des Marktfonds spiegelt die Kursentwicklung eines Korbes von Aktien wider und basiert auf tatsächlichen historischen Daten. In den letzten 20 Jahren ist diese Entwicklung durch Kursschwankungen gekennzeichnet. In diesem Zeitraum erzielte der Index eine Halbjahresrendite (halbjährliche Aufzinsung) von 3,6 % und hatte eine Standardabweichung der halbjährlichen Kursschwankung von 15,9 %.
+                    Hier sind einige Beispiele für die Wahrscheinlichkeit verschiedener Kursschwankungen:
+                    In 50 von 100 Fällen liegt die halbjährliche Rendite zwischen -7,1 % und 14,3 %.
+                    In 90 von 100 Fällen liegt die halbjährliche Rendite zwischen -22,6% und 29,8%.
+                    In 95 von 100 Fällen liegt die halbjährliche Rendite zwischen -27,6 % und 34,7 %.
+                </div>
+            </div>
+            <hr>
+            <div class="card-body">
+                <div class="btn btn-dark btn-info">
+                    Korrelation
+                </div>
+                <div class="card-text">
+                    In  der Statistik werden Stärke und Richtung eines linearen Zusammenhanges von zwei kardinalen oder ordinalen Variablen mit dem Korrelationskoeffizienten wiedergegeben. Der Korrelationskoeffizient liegt immer zwischen -1 und +1. Der Wert -1 gibt an, dass eine vollständig negative Korrelation vorliegt.
+                    Ein Beispiel: Eine Person kauft jeden Monat einen Aktienfonds A für 100 Euro. Des Weiteren kauft sie auch einen Aktienfonds B für 100 Euro. Bei einer Korrelation von -1 würde für jeden 1 Euro den Aktienfonds A steigt, Aktienfonds B um denselben Wert sinken. Also wäre, wenn Aktienfonds A 150 Euro Wert ist und eine Korrelationskoeffizient von -1 zwischen Aktienfonds A und Aktienfonds B vorliegt, Aktienfonds B 50 Euro Wert. Der Wert +1 gibt an, dass eine vollständig positive Korrelation vorliegt. In diesen Fall würden beide Aktienfonds sich in die genau in dieselbe Richtung bewegend. Beim Wert 0 besteht überhaupt kein nachweisbarer Zusammenhang zwischen zwei Variablen. In der Regel wird ab Werten unter -0,6 und über 0,6 von einem statistisch erkennbaren Zusammenhang gesprochen.
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="invisible">
+      {{ number_T }}  {{ number_B }}
+
+
+    </div>
+
+
+    <!-- HighChart Chart Example -----    -->
+    <!-- Chart -->
+{% comment %}
+        <div class="card">
+            <div class="chart" style="width: 50%; height: 380px; float:left">
+                <div id="container" style="height: 350px;"></div>
+            </div>
+        </div>
+{% endcomment %}
+
+
+
+
+
+
+<!--- Next Button -->
+    <div style="text-align:center; margin:20px">
+        <button class="otree-btn-next btn btn-primary" >Weiter</button>
+    </div>
+    <div>
+    <img src="{% static 'uibk_logo.png' %}" alt="UBIK" style="width:20%;margin:auto;display:block">
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/boost.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    {#   ----------------------------------- #}
+    {#Script for the HighChart graph and data#}
+    {#   ----------------------------------- #}
+
+{% comment %}
+
+    <script>
+
+Highcharts.chart('container', {
+  chart: {
+    type: 'line'
+  },
+  title: {
+    text: 'Price Series'
+  },
+  subtitle: {
+    text: 'Assets'
+  },
+  xAxis:{
+      title: {
+          text:"day"
+      },
+          {#categories: []#}
+  },
+  yAxis: {
+    title: {
+      text: 'Price'
+    },
+      {#categories: []#}
+  },
+  plotOptions: {
+    line: {
+      dataLabels: {
+        enabled: false
+      },
+      enableMouseTracking: true
+    }
+  },
+  series:
+  js_vars.
+    });
+</script>
+
+{% endcomment %}
+
+
+
+
+
+
+
+
+
+{% endblock %}
