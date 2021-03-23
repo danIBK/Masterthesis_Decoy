@@ -39,6 +39,61 @@ class Explain(Page):
             'number_T': number_T,
         }
 
+class Quiz(Page):
+    form_model = models.Player
+    form_fields = [
+        'quiz_vola1',
+        'quiz_vola2',
+        'quiz_vola3',
+        'quiz_vola4',
+        'quiz_cor1',
+        'quiz_cor2',
+        'quiz_cor3',
+        'quiz_cor4',
+    ]
+
+    def vars_for_template(self):
+        # specify info for task progress
+        section = int(1)
+        section_total = int(4)
+        section_progress = int(section / section_total * 100)
+
+        # specify info for page progress bar
+        total = int(5)
+        page = int(2)
+        progress = int(page / total * 100)
+
+        return {
+            'section': section,
+            'section_total': section_total,
+            'section_progress': section_progress,
+            'page': page,
+            'total': total,
+            'progress': progress,
+        }
+
+    def error_message(self, values):
+        solutions = dict(
+            quiz_vola1=None,
+            quiz_vola2=1,
+            quiz_vola3=1,
+            quiz_vola4=None,
+            quiz_cor1=1,
+            quiz_cor2=None,
+            quiz_cor3=None,
+            quiz_cor4=1,
+        )
+
+        error_messages = dict(
+        )
+
+        for field_name in solutions:
+            if values[field_name] != solutions[field_name]:
+                error_messages[field_name] = 'Nicht Korrekt. Lesen Sie die Hinweise wenn Sie sich unsicher sind.'
+
+        return error_messages
+
+
 
 class charts(Page):
     form_model = models.Player
@@ -61,7 +116,7 @@ class charts(Page):
     #     return: True
     #
 
-    def vars_for_template(self) :
+    def vars_for_template(self):
         # specify info for task progress
         section = int(1)
         section_total = int(4)
@@ -82,7 +137,7 @@ class charts(Page):
             'page': page,
             'total': total,
             'progress': progress,
-            'number_B' : number_B,
+            'number_B': number_B,
 
         }
 
@@ -213,4 +268,4 @@ class Results(Page):
     #     }
 
 
-page_sequence = [Explain, charts, treatmentpage, Results]
+page_sequence = [Explain, Quiz, charts, treatmentpage, Results]

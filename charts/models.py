@@ -107,6 +107,19 @@ class Player(BasePlayer):
     base_or_treatment = models.BooleanField()
     final_return = models.FloatField()
 
+    ##################################
+    #              Quiz              #
+    ##################################
+    quiz_vola1 = models.IntegerField(initial=0, blank=True)
+    quiz_vola2 = models.IntegerField(initial=0, blank=True)
+    quiz_vola3 = models.IntegerField(initial=0, blank=True)
+    quiz_vola4 = models.IntegerField(initial=0, blank=True)
+
+    quiz_cor1 = models.IntegerField(initial=0, blank=True)
+    quiz_cor2 = models.IntegerField(initial=0, blank=True)
+    quiz_cor3 = models.IntegerField(initial=0, blank=True)
+    quiz_cor4 = models.IntegerField(initial=0, blank=True)
+
 
 
 

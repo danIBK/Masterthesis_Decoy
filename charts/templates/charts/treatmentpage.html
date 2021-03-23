@@ -116,14 +116,15 @@
                                     <tr>
                                         <td colspan="2" style="background-color: white;color: black;border-top-style: solid;
                                          border-top-color: black;">
-                                            <small>Korrelation = 0 </small> </td>
+                                            <small>Korrelation mit Indexprodukt A = 0 <br>
+                                                Korrelation mit Indexprodukt B = 0 </small> </td>
                                     </tr>
 
                                 </table>
                             </div>
 
                             <div class="box-1-t" id="summary-box-base1">
-                                <th><h4> Marktfonds A </h4></th>
+                                <th><h4> Indexprodukt A </h4></th>
                                 <table id="summary-base1" style="">
                                     <tr>
                                         <th> <h6>  Durchschnittliche Rendite in letzten 12 Monate </h6> </th>
@@ -142,13 +143,14 @@
                                     <tr>
                                         <td colspan="2" style="background-color: white;color: black;border-top-style: solid;
                                          border-top-color: black;">
-                                            <small>Korrelation mit Marktfonds B = 1 </small> </td>
+                                            <small>Korrelation mit Anleihen = 0 <br>
+                                                Korrelation mit Indexprodukt B = 1 </small> </td>
                                     </tr>
                                 </table>
                             </div>
 
                             <div class="box-1-t" id="summary-box-base1">
-                                <th><h4> Marktfonds B </h4></th>
+                                <th><h4> Indexprodukt B </h4></th>
                                 <table id="summary-base1">
                                     <tr>
                                         <th> <h6>  Durchschnittliche Rendite in letzten 12 Monate </h6> </th>
@@ -167,7 +169,8 @@
                                     <tr>
                                         <td colspan="2" style="background-color: white;color: black;border-top-style: solid;
                                          border-top-color: black;">
-                                            <small> Korrelation mit Marktfonds A = 1  </small>  </td>
+                                            <small>Korrelation mit Anleihen = 0 <br>
+                                                Korrelation mit Indexprodukt A = 1  </small>  </td>
                                     </tr>
                                 </table>
                             </div>
@@ -190,7 +193,7 @@
                                     <th> Anteil in € </th>
                                     <th> Anteil in % </th></tr>
                                 <tr>
-                                    <td> Anleihe </td>
+                                    <td> Anleihen </td>
                                     <td> <input class="form-control center" style="width: 90%" id="RF" type="text" min="0" max="10000"
                                                 onchange="updateRF(this.value); validateRF();updateSuM(this.value);"> </td>
                                     <td> <div class="input-group" style="width:70%;">
@@ -201,7 +204,7 @@
                                     </td></tr>
 
                                 <tr>
-                                    <td> Marktfonds A </td>
+                                    <td> Indexprodukt A </td>
                                     <td> <input class="form-control center" style="width: 90%" id="MFA" type="text" min="0" max="10000"
                                                 onchange="updateMFA(this.value); validateMFA();updateSuM(this.value);"> </td>
                                     <td> <div class="input-group" style="width:70%;">
@@ -215,7 +218,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td> Marktfonds B </td>
+                                    <td> Indexprodukt B </td>
                                     <td> <input class="form-control center" style="width: 90%" id="MFB" type="text" min="0" max="10000"
                                                 onchange="updateMFB(this.value); validateMFB();updateSuM(this.value);"> </td>
                                     <td> <div class="input-group" style="width:70%;">

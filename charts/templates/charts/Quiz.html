@@ -1,0 +1,199 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+{% load humanize %}
+
+{#--- STYLES ---------------------------------------------------------------------------------------------------------#}
+{% block styles %}
+    <link href="{% static 'global/css/all.css' %}" rel="stylesheet"/>
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet"/>
+    <link href="{% static 'charts/css/custom.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}
+    Kurzes Quiz
+{% endblock %}
+
+#--- CONTENT --------------------------------------------------------------------------------------------------------#}
+{% block content %}
+
+    <!--- Image Logo of ECON LAB --------------------------------------------------------------------------------- --->
+    <img src="{% static 'econlab.png' %}" alt="Innsbruck EconLab" style="width: 100px; margin-right:5pt; float:right "/>
+    <!-- --------------------------------------------------------------------------------------------------------- --->
+
+
+    <!--- Progress Wrapper --------------------------------------------------------------------------------- --->
+    <div class="wrapper">
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar Block -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Block {{ section }} von {{ section_total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ section_progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Progress Bar Aufgabe-->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <label>
+            Aufgabe {{ page }} von {{ total }}
+        </label>
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width:{{ progress }}%;">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+        <div class="progress-vspace"></div>
+    </div>
+<!-- --------------->
+<div class="wrapper">
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Table - Quiz -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <div class="card">
+            <div class="card-header">
+                <b> Welche der folgenden Aussagen ist richtig?</b>
+            </div>
+
+        <!----------------->
+        <!--- Frage 1 ----->
+        <!----------------->
+    <div class="card-body">
+        <div class="card-title">
+            <b> Frage 1 </b>
+        </div>
+
+        <div class="checkbox-row">
+            <table>
+                <tr><th colspan="2"> </th></tr>
+                <tr style="word-break:break-all;word-wrap:break-word; padding-left: 0px">
+                    <td> <input type="checkbox" name="quiz_vola1" id="quiz_vola1" value='1' >
+                        <label class = "btn-sm btn-light" for="quiz_vola1">
+                            Je weniger sich der Wert eines Assets/Finanzprodukts während
+                            eines bestimmten Zeitraums ändert, umso höher ist die Volatilität.
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td> <input type="checkbox" name="quiz_vola2" id="quiz_vola2" value='1'>
+                        <label class = "btn-sm btn-light" for="quiz_vola2">
+                            Je stärker sich der Wert eines Assets/Finanzprodukts während
+                            eines bestimmten Zeitraums ändert, umso höher ist die Volatilität.
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td> <input type="checkbox" name="quiz_vola3" id="quiz_vola3" value='1'>
+                        <label class = "btn-sm btn-light" for="quiz_vola3">
+                            Je weniger sich der Wert eines Assets/Finanzprodukts während eines bestimmten Zeitraums
+                            ändert, umso geringer ist die Volatilität.
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td> <input type="checkbox" name="quiz_vola4" id="quiz_vola4" value='1'>
+                        <label class = "btn-sm btn-light" for="quiz_vola4">
+                            Je stärker sich der Wert eines Assets/Finanzprodukts während eines bestimmten Zeitraums
+                            ändert, umso geringer ist die Volatilität.
+                        </label>
+                    </td>
+                </tr>
+            </table>
+            <hr>
+        </div>
+
+
+        <div class="card-title">
+                <b>Frage 2 </b>
+        </div>
+
+        <!----------------->
+        <!--- Frage 2 ----->
+        <!----------------->
+        <div class="checkbox-row">
+            <table>
+                <tr><th colspan="2"> </th></tr>
+                <tr style="word-break:break-all;word-wrap:break-word; padding-left: 0px">
+                    <td> <input type="checkbox" name="quiz_cor1" id="quiz_cor1" value='1'>
+                        <label class = "btn-sm btn-light" for="quiz_cor1">
+                            Bei einem Einkaufspreis von 100 Euro für ein Assets/Finanzprodukts vor einem Jahr und
+                            einem Verkaufspreis heute, ein Jahr später von 120 Euro, wurde eine Rendite von 20% erzielt.
+                            <i> Annahme: keinerlei sonstigen Gebühren oder Kosten.</i>
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td> <input type="checkbox" name="quiz_cor2" id="quiz_cor2" value='1'>
+                        <label class = "btn-sm btn-light" for="quiz_cor2">
+                            Wenn Asset/Finanzprodukt A und B eine Korrelation von -1 haben und A im letzten Zeitraum
+                            um 100 % gestiegen ist, ist auch B um 100% gestiegen.
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td> <input type="checkbox" name="quiz_cor3" id="quiz_cor3" value='1'>
+                        <label class = "btn-sm btn-light" for="quiz_cor3">
+                            Bei einem Einkaufspreis von 120 Euro für ein Assets/Finanzprodukts vor einem Jahr und
+                            einem Verkaufspreis heute, ein Jahr später von 100 Euro, wurde eine Rendite von 20% erzielt.
+                            <i> Annahme: keinerlei sonstigen Gebühren oder Kosten.</i>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td> <input type="checkbox" name="quiz_cor4" id="quiz_cor4" value='1'>
+                        <label class = "btn-sm btn-light" for="quiz_cor4">
+                            Wenn Asset/Finanzprodukt A und B eine Korrelation von 1 haben und B im letzten Zeitraum
+                            um 100% gestiegen ist, ist auch A um 100% gestiegen.
+                        </label>
+                    </td>
+                </tr>
+            </table>
+            <hr>
+        </div>
+
+{#        <div class="btn-outline-info" align="center">#}
+{#            Hilfestellungen#}
+{#            <div class="btn-info" onmouseover="bigImg(this)" style=" color: #17a2b8" align="left">#}
+{#                Geringe Volatilität bedeutet eine geringe Schwankung des Werts eines Assets/Finanzprodukts#}
+{#                Hohe Volatilität bedeutet eine hohe Schwankung des Werts#}
+{#            </div>#}
+{#        </div>#}
+
+
+
+</div>
+</div>
+{{ form.errors }}
+        </div>
+
+
+
+
+    <!--- Next Button -->
+    <div style="text-align:center; margin:20px">
+        <button class="otree-btn-next btn btn-primary">Weiter</button>
+    </div>
+    <div>
+    <img src="{% static 'uibk_logo.png' %}" alt="UBIK" style="width:20%;margin:auto;display:block">
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+
+    <script>
+    function bigImg(x) {
+        x.style.visibility = "visible !important";
+        x.style.color = "white";
+        x.style.height = "100px";
+    }
+    </script>
+
+{% endblock %}
