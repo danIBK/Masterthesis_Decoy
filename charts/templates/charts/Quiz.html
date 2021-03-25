@@ -74,8 +74,8 @@
                 <tr style="word-break:break-all;word-wrap:break-word; padding-left: 0px">
                     <td> <input type="checkbox" name="quiz_vola1" id="quiz_vola1" value='1' >
                         <label class = "btn-sm btn-light" for="quiz_vola1">
-                            Je weniger sich der Wert eines Assets/Finanzprodukts während
-                            eines bestimmten Zeitraums ändert, umso höher ist die Volatilität.
+                            Je <b>weniger</b> sich der Wert eines Assets/Finanzprodukts während
+                            eines bestimmten Zeitraums ändert, umso <b>höher</b> ist die Volatilität.
                         </label>
                     </td>
                 </tr>
@@ -83,28 +83,32 @@
                 <tr>
                     <td> <input type="checkbox" name="quiz_vola2" id="quiz_vola2" value='1'>
                         <label class = "btn-sm btn-light" for="quiz_vola2">
-                            Je stärker sich der Wert eines Assets/Finanzprodukts während
-                            eines bestimmten Zeitraums ändert, umso höher ist die Volatilität.
+                            Je <b> stärker </b> sich der Wert eines Assets/Finanzprodukts während
+                            eines bestimmten Zeitraums ändert, umso <b>höher</b> ist die Volatilität.
                         </label>
                     </td>
                 </tr>
                 <tr>
                     <td> <input type="checkbox" name="quiz_vola3" id="quiz_vola3" value='1'>
                         <label class = "btn-sm btn-light" for="quiz_vola3">
-                            Je weniger sich der Wert eines Assets/Finanzprodukts während eines bestimmten Zeitraums
-                            ändert, umso geringer ist die Volatilität.
+                            Je <b>weniger</b> sich der Wert eines Assets/Finanzprodukts während eines bestimmten Zeitraums
+                            ändert, umso <b>geringer </b> ist die Volatilität.
                         </label>
                     </td>
                 </tr>
                 <tr>
                     <td> <input type="checkbox" name="quiz_vola4" id="quiz_vola4" value='1'>
                         <label class = "btn-sm btn-light" for="quiz_vola4">
-                            Je stärker sich der Wert eines Assets/Finanzprodukts während eines bestimmten Zeitraums
-                            ändert, umso geringer ist die Volatilität.
+                            Je <b> stärker </b> sich der Wert eines Assets/Finanzprodukts während eines bestimmten Zeitraums
+                            ändert, umso <b>geringer</b> ist die Volatilität.
                         </label>
                     </td>
                 </tr>
             </table>
+            <div class="btn-danger"id="vola1_hint">
+                Geringe Volatilität bedeutet eine geringe Schwankung des Werts eines Assets/Finanzprodukts</div>
+            <div class="btn-danger"id="vola4_hint">
+                Hohe Volatilität bedeutet eine hohe Schwankung des Werts eines Assets/Finanzprodukts</div>
             <hr>
         </div>
 
@@ -155,7 +159,11 @@
                     </td>
                 </tr>
             </table>
-            <hr>
+            <div class="btn-danger" id="quiz_cor2_hint">
+                Eine negative Korrelation erklärt eine gegenläufige Entwicklung.</div>
+            <div class="btn-danger" id="quiz_cor3_hint">
+                Wird für weniger verkauft als gekauft wurde, wird eine negative Rendite erzielt.</div>
+
         </div>
 
 {#        <div class="btn-outline-info" align="center">#}
@@ -178,14 +186,14 @@
 
     <!--- Next Button -->
     <div style="text-align:center; margin:20px">
-        <button class="otree-btn-next btn btn-primary">Weiter</button>
+        <button class="otree-btn-next btn btn-primary" id="nextbutton">Weiter</button>
     </div>
     <div>
     <img src="{% static 'uibk_logo.png' %}" alt="UBIK" style="width:20%;margin:auto;display:block">
     </div>
 {% endblock %}
 
-
+a
 {% block scripts %}
 
     <script>
@@ -195,5 +203,56 @@
         x.style.height = "100px";
     }
     </script>
+
+    <script>
+    function showmore_ja(){
+        var quiz_vola1 = document.getElementById("quiz_vola1");
+        var quiz_vola2 = document.getElementById("quiz_vola2");
+        var quiz_vola3 = document.getElementById("quiz_vola3");
+        var quiz_vola4 = document.getElementById("quiz_vola4");
+
+
+        quiz_vola1.style.display = quiz_vola1.checked ? "block" : "none";
+        quiz_vola2.style.display = quiz_vola2.checked ? "none" : "block";
+        quiz_vola1.setAttribute("required","");
+        quiz_vola2.setAttribute("required","");
+        quiz_vola3.removeAttribute("required");
+        quiz_vola4.removeAttribute("required");
+    }
+
+    document.getElementById('quiz_vola1').onchange = function() {
+        document.getElementById('vola1_hint').style.display = this.checked ? 'block' : 'none';
+    };
+    document.getElementById('quiz_vola4').onchange = function() {
+        document.getElementById('vola4_hint').style.display = this.checked ? 'block' : 'none';
+    };
+    document.getElementById('quiz_cor2').onchange = function() {
+        document.getElementById('quiz_cor2_hint').style.display = this.checked ? 'block' : 'none';
+    };
+    document.getElementById('quiz_cor3').onchange = function() {
+        document.getElementById('quiz_cor3_hint').style.display = this.checked ? 'block' : 'none';
+    };
+
+    document.getElementById('nextbutton').onchange = function() {
+        document.getElementById('vola1_hint').style.display = this.checked ? 'block' : 'none';
+    };
+
+
+    </script>
+
+    <style>
+        #vola1_hint {
+            display: none;
+        }
+        #vola4_hint {
+            display: none;
+        }
+        #quiz_cor2_hint {
+            display: none;
+        }
+        #quiz_cor3_hint {
+            display: none;
+        }
+        </style>
 
 {% endblock %}
